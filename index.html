@@ -2350,7 +2350,7 @@
       var mk = (RB.marcas || []).filter(function(m){ return m.viagens >= 100; })
         .map(function(m){ return esc(m.marca) + " " + nf(m.taxa, 2); }).join(" · ");
       T.foco_reb_nota = "Por marca de semi-reboque (ocorrências por 100 viagens): " + mk + " · média " + nf(RB.taxa_media, 2) + ". " +
-        "Em laranja, semi-reboques com 3+ ocorrências e taxa acima do dobro da média. Ocorrência = OS do mesmo caminhão depois da mesma viagem (contadas uma vez); preventivas ficam de fora. " +
+        "Em laranja, semi-reboques com 4+ ocorrências e taxa acima do dobro da média. Ocorrência = OS do mesmo caminhão depois da mesma viagem (contadas uma vez); preventivas ficam de fora. " +
         "Reboques da última pesagem do caminhão até " + nf(RB.janela_h) +
         " h antes da OS; pesagem desde " + dm(RB.desde) + ": " + nf(RB.os_identificadas) + " de " + nf(RB.os_elegiveis) + " OS identificadas" +
         (RB.os_sem_viagem ? " (" + nf(RB.os_sem_viagem) + " em caminhões sem viagem de cana: vinhaça, prancha etc.)" : "") +
@@ -2619,7 +2619,7 @@
     var RBm = F.reboques.taxa_media || 0;
     tbFR.innerHTML = F.reboques.semis.slice(0, 10).map(function(x){
       var no = x.ocorrencias != null ? x.ocorrencias : x.os;
-      var alerta = no >= 3 && x.taxa != null && x.taxa >= 2 * RBm;
+      var alerta = no >= 4 && x.taxa != null && x.taxa >= 2 * RBm;
       return '<tr class="' + (alerta ? '' : 'mute') + '"><td class="f">' + esc(x.reboque) + '</td><td class="hide-sm">' + esc(x.descricao) + '</td>' +
         '<td class="num">' + nf(no) + (x.os > no ? ' <span style="color:var(--ink-3)">(' + nf(x.os) + ' OS)</span>' : '') + '</td><td class="num">' + nf(x.caminhoes) + '</td><td class="num hide-sm">' + nf(x.viagens) + '</td>' +
         '<td><div class="ib" style="justify-content:flex-end"><i style="width:calc(min(8vw,90px) * ' + Math.min(1, (x.taxa || 0) / Math.max(4 * RBm, 0.01)).toFixed(4) + ')"></i><span>' + nf(x.taxa || 0, 2) + '</span></div></td>' +
