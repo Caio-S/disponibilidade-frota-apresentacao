@@ -266,6 +266,128 @@
 -->
 <script id="dados" type="application/json">{
  "escopo": "caminhões próprios",
+ "especialidades": [
+  {
+   "nome": "Canavieiro",
+   "caminhoes": 47,
+   "horas": 55136.8,
+   "paradas": 4548,
+   "disp": 0.7299,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "nome": "Bombeiro",
+   "caminhoes": 17,
+   "horas": 20641.5,
+   "paradas": 837,
+   "disp": 0.7031,
+   "motivo": "Câmbio / transmissão"
+  },
+  {
+   "nome": "Assistência",
+   "caminhoes": 8,
+   "horas": 4460.0,
+   "paradas": 213,
+   "disp": 0.8717,
+   "motivo": "Preventiva"
+  },
+  {
+   "nome": "Aplic. vinhaça",
+   "caminhoes": 5,
+   "horas": 5684.0,
+   "paradas": 356,
+   "disp": 0.7383,
+   "motivo": "Preventiva"
+  },
+  {
+   "nome": "Caçamba",
+   "caminhoes": 5,
+   "horas": 9364.6,
+   "paradas": 302,
+   "disp": 0.5688,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "nome": "Comboio",
+   "caminhoes": 5,
+   "horas": 5792.6,
+   "paradas": 362,
+   "disp": 0.7333,
+   "motivo": "Elétrica"
+  },
+  {
+   "nome": "Não informado",
+   "caminhoes": 4,
+   "horas": 0,
+   "paradas": 0,
+   "disp": 1.0,
+   "motivo": ""
+  },
+  {
+   "nome": "Prancha",
+   "caminhoes": 4,
+   "horas": 3138.8,
+   "paradas": 290,
+   "disp": 0.7764,
+   "motivo": "Elétrica"
+  },
+  {
+   "nome": "Borracharia",
+   "caminhoes": 2,
+   "horas": 2916.7,
+   "paradas": 107,
+   "disp": 0.6643,
+   "motivo": "Suspensão / direção"
+  },
+  {
+   "nome": "Oficina",
+   "caminhoes": 2,
+   "horas": 4598.8,
+   "paradas": 37,
+   "disp": 0.4707,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "nome": "Roll on/off",
+   "caminhoes": 2,
+   "horas": 3565.0,
+   "paradas": 118,
+   "disp": 0.5897,
+   "motivo": "Preventiva"
+  },
+  {
+   "nome": "Suprimentos",
+   "caminhoes": 2,
+   "horas": 1240.8,
+   "paradas": 32,
+   "disp": 0.8572,
+   "motivo": "Estrutura / solda"
+  },
+  {
+   "nome": "Baú herbicida",
+   "caminhoes": 1,
+   "horas": 538.5,
+   "paradas": 17,
+   "disp": 0.8123,
+   "motivo": "Preventiva"
+  },
+  {
+   "nome": "Munck",
+   "caminhoes": 1,
+   "horas": 718.2,
+   "paradas": 10,
+   "disp": 0.8347,
+   "motivo": "Preventiva"
+  },
+  {
+   "nome": "Transp. tubo",
+   "caminhoes": 1,
+   "horas": 661.4,
+   "paradas": 34,
+   "disp": 0.8478,
+   "motivo": "Elétrica"
+  }
+ ],
  "aviso": "OS de reforma desconsideradas (5 OS): nesses dias o caminhão sai da base.",
  "lacunas": [],
  "excluidas": {
@@ -1115,7 +1237,8 @@
    "horas": 4171.2,
    "paradas": 2,
    "disp": 0.0398,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Oficina"
   },
   {
    "frota": "61250",
@@ -1123,7 +1246,8 @@
    "horas": 3076.9,
    "paradas": 69,
    "disp": 0.2917,
-   "motivo": "Estrutura / solda"
+   "motivo": "Estrutura / solda",
+   "especialidade": "Caçamba"
   },
   {
    "frota": "61252",
@@ -1131,7 +1255,8 @@
    "horas": 2768.2,
    "paradas": 53,
    "disp": 0.3627,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Caçamba"
   },
   {
    "frota": "60904",
@@ -1139,7 +1264,8 @@
    "horas": 2758.7,
    "paradas": 49,
    "disp": 0.3649,
-   "motivo": "Câmbio / transmissão"
+   "motivo": "Câmbio / transmissão",
+   "especialidade": "Bombeiro"
   },
   {
    "frota": "60546",
@@ -1147,7 +1273,8 @@
    "horas": 2643.8,
    "paradas": 38,
    "disp": 0.3914,
-   "motivo": "Sinistro / acidente"
+   "motivo": "Sinistro / acidente",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "60520",
@@ -1155,7 +1282,8 @@
    "horas": 2629.9,
    "paradas": 103,
    "disp": 0.3946,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "60534",
@@ -1163,7 +1291,8 @@
    "horas": 2428.2,
    "paradas": 79,
    "disp": 0.441,
-   "motivo": "Sinistro / acidente"
+   "motivo": "Sinistro / acidente",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "60806",
@@ -1171,7 +1300,8 @@
    "horas": 2391.1,
    "paradas": 51,
    "disp": 0.4496,
-   "motivo": "Preventiva"
+   "motivo": "Preventiva",
+   "especialidade": "Roll on/off"
   },
   {
    "frota": "60533",
@@ -1179,7 +1309,8 @@
    "horas": 2278.6,
    "paradas": 97,
    "disp": 0.4755,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "60516",
@@ -1187,7 +1318,8 @@
    "horas": 2167.7,
    "paradas": 97,
    "disp": 0.501,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "60911",
@@ -1195,7 +1327,8 @@
    "horas": 2088.9,
    "paradas": 38,
    "disp": 0.5191,
-   "motivo": "Câmbio / transmissão"
+   "motivo": "Câmbio / transmissão",
+   "especialidade": "Bombeiro"
   },
   {
    "frota": "61251",
@@ -1203,7 +1336,8 @@
    "horas": 2088.3,
    "paradas": 58,
    "disp": 0.5193,
-   "motivo": "Suspensão / direção"
+   "motivo": "Suspensão / direção",
+   "especialidade": "Caçamba"
   },
   {
    "frota": "60512",
@@ -1211,7 +1345,8 @@
    "horas": 2051.2,
    "paradas": 49,
    "disp": 0.5278,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "60505",
@@ -1219,7 +1354,8 @@
    "horas": 2004.7,
    "paradas": 91,
    "disp": 0.5385,
-   "motivo": "Freios / ar comprimido"
+   "motivo": "Freios / ar comprimido",
+   "especialidade": "Aplic. vinhaça"
   },
   {
    "frota": "60511",
@@ -1227,7 +1363,8 @@
    "horas": 1970.1,
    "paradas": 104,
    "disp": 0.5465,
-   "motivo": "Outros"
+   "motivo": "Outros",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "61002",
@@ -1235,7 +1372,8 @@
    "horas": 1952.5,
    "paradas": 49,
    "disp": 0.5505,
-   "motivo": "Suspensão / direção"
+   "motivo": "Suspensão / direção",
+   "especialidade": "Borracharia"
   },
   {
    "frota": "60518",
@@ -1243,7 +1381,8 @@
    "horas": 1942.6,
    "paradas": 71,
    "disp": 0.5528,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "60503",
@@ -1251,7 +1390,8 @@
    "horas": 1893.9,
    "paradas": 73,
    "disp": 0.564,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "60906",
@@ -1259,7 +1399,8 @@
    "horas": 1844.5,
    "paradas": 64,
    "disp": 0.5754,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Bombeiro"
   },
   {
    "frota": "60500",
@@ -1267,7 +1408,8 @@
    "horas": 1842.6,
    "paradas": 79,
    "disp": 0.5758,
-   "motivo": "Preventiva"
+   "motivo": "Preventiva",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "60552",
@@ -1275,7 +1417,8 @@
    "horas": 1721.5,
    "paradas": 80,
    "disp": 0.6037,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "60506",
@@ -1283,7 +1426,8 @@
    "horas": 1552.1,
    "paradas": 83,
    "disp": 0.6427,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Aplic. vinhaça"
   },
   {
    "frota": "60541",
@@ -1291,7 +1435,8 @@
    "horas": 1536.5,
    "paradas": 101,
    "disp": 0.6463,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "60515",
@@ -1299,7 +1444,8 @@
    "horas": 1524.6,
    "paradas": 135,
    "disp": 0.649,
-   "motivo": "Elétrica"
+   "motivo": "Elétrica",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "60501",
@@ -1307,7 +1453,8 @@
    "horas": 1518.2,
    "paradas": 98,
    "disp": 0.6505,
-   "motivo": "Preventiva"
+   "motivo": "Preventiva",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "61151",
@@ -1315,7 +1462,8 @@
    "horas": 1472.5,
    "paradas": 40,
    "disp": 0.661,
-   "motivo": "Câmbio / transmissão"
+   "motivo": "Câmbio / transmissão",
+   "especialidade": "Comboio"
   },
   {
    "frota": "60901",
@@ -1323,7 +1471,8 @@
    "horas": 1459.3,
    "paradas": 67,
    "disp": 0.6641,
-   "motivo": "Preventiva"
+   "motivo": "Preventiva",
+   "especialidade": "Bombeiro"
   },
   {
    "frota": "60545",
@@ -1331,7 +1480,8 @@
    "horas": 1422.1,
    "paradas": 103,
    "disp": 0.6726,
-   "motivo": "Preventiva"
+   "motivo": "Preventiva",
+   "especialidade": "Canavieiro"
   },
   {
    "frota": "61152",
@@ -1339,7 +1489,8 @@
    "horas": 1394.4,
    "paradas": 72,
    "disp": 0.679,
-   "motivo": "Motor / arrefecimento"
+   "motivo": "Motor / arrefecimento",
+   "especialidade": "Comboio"
   },
   {
    "frota": "60917",
@@ -1347,7 +1498,8 @@
    "horas": 1374.1,
    "paradas": 74,
    "disp": 0.6837,
-   "motivo": "Elétrica"
+   "motivo": "Elétrica",
+   "especialidade": "Bombeiro"
   }
  ]
 }</script>
@@ -1388,6 +1540,21 @@
         <div class="c r"><div class="n">Paradas registradas</div><div class="t" data-t="kpi_paradas"></div><div class="d" data-t="kpi_paradas_d"></div></div>
         <div class="c r"><div class="n">Tempo médio por parada</div><div class="t" data-t="kpi_mttr"></div><div class="d" data-t="kpi_mttr_d"></div></div>
       </div>
+    </div>
+  </section>
+
+  <!-- 3b · por especialidade -->
+  <section class="slide esp" data-block="01" data-sec="Especialidade" data-accent="orange">
+    <div class="inner">
+      <div class="kicker r">Disponibilidade por especialidade</div>
+      <h3 class="r" data-t="esp_titulo"></h3>
+      <table class="rank r" id="tbEsp">
+        <thead><tr>
+          <th>Especialidade</th><th class="num">Caminhões</th><th>Disponibilidade</th><th class="num hide-sm">Paradas</th><th class="num">Horas paradas</th><th class="hide-sm">Motivo principal</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="note r" data-t="esp_nota"></div>
     </div>
   </section>
 
@@ -1598,7 +1765,7 @@
   <button class="ico" id="btnNext" aria-label="Próximo slide">→</button>
   <button class="ico" id="btnFull" aria-label="Tela cheia">Tela cheia</button>
 </div>
-<div class="chrome br"><span id="lblNum">01</span> / <span id="lblTot">20</span></div>
+<div class="chrome br"><span id="lblNum">01</span> / <span id="lblTot">22</span></div>
 <div id="bar" style="width:0"></div>
 
 <script>
@@ -1736,6 +1903,20 @@
   T.agora_kicker = "Situação em " + dmy(D.gerado_em || D.fim);
   T.agora_titulo = nf(AB.caminhoes) + " caminhões com OS aberta agora" +
     (AB.mais_30d ? " — " + nf(AB.mais_30d) + " parados há mais de 30 dias." : ".");
+
+  // por especialidade
+  var ESP = (D.especialidades || []).filter(function(e){ return e.disp != null; });
+  if(!ESP.length || (ESP.length === 1 && ESP[0].nome === "Não informado")){
+    document.querySelectorAll(".slide.esp").forEach(function(sl){ sl.remove(); });
+  } else {
+    var maior = ESP[0];
+    var comparaveis = ESP.filter(function(e){ return e.caminhoes >= 3 && e.nome !== "Não informado"; });
+    var piorE = comparaveis.slice().sort(function(a,b){ return a.disp - b.disp; })[0];
+    T.esp_titulo = esc(maior.nome) + " (" + nf(maior.caminhoes) + " caminhões): " + pct(maior.disp) + "." +
+      (piorE && piorE !== maior ? " Menor disponibilidade: " + esc(piorE.nome.toLowerCase()) + ", " + pct(piorE.disp) + "." : "");
+    T.esp_nota = "Em laranja, especialidades abaixo da média da frota (" + pct(D.disp_media) + "). " +
+      "Especialidade do cadastro de abastecimento; sem ela, a aplicação mais frequente nas OS. Grupos com 1–2 caminhões oscilam muito.";
+  }
 
   // seção em foco (ex.: quinta roda)
   var F = D.foco;
@@ -1972,7 +2153,7 @@
   var tb = document.querySelector("#tbFrotas tbody");
   tb.innerHTML = top10.map(function(f,i){
     return '<tr class="'+(i>=3?'mute':'')+'"><td class="pos">'+String(i+1).padStart(2,"0")+'</td>'+
-      '<td class="f">'+esc(f.frota)+(f.descricao?' <span style="color:var(--ink-3);font-weight:400">· '+esc(f.descricao)+'</span>':'')+'</td>'+
+      '<td class="f">'+esc(f.frota)+(f.descricao?' <span style="color:var(--ink-3);font-weight:400">· '+esc(f.descricao)+(f.especialidade?' · '+esc(f.especialidade):'')+'</span>':'')+'</td>'+
       '<td><div class="ib"><i style="width:calc(min(22vw,240px) * '+(f.horas/maxF).toFixed(4)+')"></i><span>'+nf(f.horas,0)+' h</span></div></td>'+
       '<td class="num">'+nf(f.paradas)+'</td><td class="num">'+pct(f.disp)+'</td>'+
       '<td class="mot hide-sm" title="'+esc(f.motivo||"")+'">'+esc(f.motivo||"—")+'</td></tr>';
@@ -2019,6 +2200,16 @@
         '<td class="mot hide-sm">' + esc(r.tipo) + '</td><td class="num">' + dm(r.ultima) + '</td></tr>';
     }).join("");
   }
+
+  var tbEsp = document.querySelector("#tbEsp tbody");
+  if(tbEsp) tbEsp.innerHTML = ESP.map(function(e){
+    var abaixo = e.disp < D.disp_media;
+    return '<tr class="' + (abaixo ? '' : 'mute') + '"><td class="f">' + esc(e.nome) + '</td>' +
+      '<td class="num">' + nf(e.caminhoes) + '</td>' +
+      '<td><div class="ib"><i style="width:calc(min(16vw,180px) * ' + e.disp.toFixed(4) + ')"></i><span>' + pct(e.disp) + '</span></div></td>' +
+      '<td class="num hide-sm">' + nf(e.paradas) + '</td><td class="num">' + nf(e.horas, 0) + ' h</td>' +
+      '<td class="mot hide-sm">' + esc(e.motivo || "—") + '</td></tr>';
+  }).join("");
 
   window.__drawCharts = drawLine;
   window.addEventListener("resize", drawLine);
