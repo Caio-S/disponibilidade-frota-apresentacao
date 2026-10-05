@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
 <title>Disponibilidade da Frota</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
@@ -230,6 +231,10 @@
 
   .note{font-size:min(1.5vw,2vh,15px);color:var(--ink-3);margin-top:min(2.4vh,20px)}
 
+  ul.quotes{list-style:none;margin:min(3vh,26px) 0 0;padding:0;display:grid;gap:min(1.7vh,15px)}
+  ul.quotes li{display:grid;grid-template-columns:4ch 1fr;gap:14px;align-items:baseline;font-family:"Source Serif 4",Georgia,serif;font-style:italic;font-size:min(1.9vw,2.5vh,20px);line-height:1.35;color:var(--ink)}
+  ul.quotes li b{font-family:"IBM Plex Mono",ui-monospace,monospace;font-style:normal;font-weight:500;font-size:min(1.4vw,1.9vh,14px);color:var(--ink-3);text-align:right}
+
   .hint{
     font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;letter-spacing:.16em;
     text-transform:uppercase;color:var(--ink-3);margin-top:min(6vh,54px);
@@ -262,6 +267,248 @@
 <script id="dados" type="application/json">{
  "escopo": "caminhões próprios",
  "aviso": "O banco só tem ordens de serviço a partir de 15/08/2026 — de 07/04 a 14/08 não há registro nesta fonte.",
+ "foco": {
+  "nome": "Quinta roda",
+  "os": 147,
+  "os_parado": 128,
+  "caminhoes": 46,
+  "base": 61,
+  "horas": 1258.5,
+  "mediana_h": 3.24,
+  "pct_paradas": 0.0636,
+  "reincidentes_3": 21,
+  "semanas": [
+   {
+    "inicio": "2026-08-17",
+    "dias": 7,
+    "os": 26,
+    "parado": 19
+   },
+   {
+    "inicio": "2026-08-24",
+    "dias": 7,
+    "os": 20,
+    "parado": 17
+   },
+   {
+    "inicio": "2026-08-31",
+    "dias": 7,
+    "os": 23,
+    "parado": 21
+   },
+   {
+    "inicio": "2026-09-07",
+    "dias": 7,
+    "os": 17,
+    "parado": 14
+   },
+   {
+    "inicio": "2026-09-14",
+    "dias": 7,
+    "os": 16,
+    "parado": 15
+   },
+   {
+    "inicio": "2026-09-21",
+    "dias": 7,
+    "os": 23,
+    "parado": 23
+   },
+   {
+    "inicio": "2026-09-28",
+    "dias": 7,
+    "os": 22,
+    "parado": 19
+   }
+  ],
+  "tipos": [
+   {
+    "nome": "Verificar / regular",
+    "os": 41,
+    "horas": 272.5
+   },
+   {
+    "nome": "Troca da peça",
+    "os": 25,
+    "horas": 277.0
+   },
+   {
+    "nome": "Não engata / não trava",
+    "os": 24,
+    "horas": 330.5
+   },
+   {
+    "nome": "Lubrificação / limpeza",
+    "os": 21,
+    "horas": 66.8
+   },
+   {
+    "nome": "Quebra / trinca",
+    "os": 17,
+    "horas": 137.0
+   },
+   {
+    "nome": "Parafusos / folga",
+    "os": 12,
+    "horas": 41.5
+   },
+   {
+    "nome": "Outros",
+    "os": 7,
+    "horas": 133.1
+   }
+  ],
+  "locais": [
+   {
+    "nome": "Interna",
+    "os": 117,
+    "horas": 1202.2
+   },
+   {
+    "nome": "No campo",
+    "os": 11,
+    "horas": 56.3
+   }
+  ],
+  "modelos": [
+   {
+    "nome": "VOLVO FM",
+    "os": 81,
+    "afetados": 23,
+    "frota": 29
+   },
+   {
+    "nome": "VOLVO FMX",
+    "os": 46,
+    "afetados": 17,
+    "frota": 21
+   },
+   {
+    "nome": "VOLVO FH",
+    "os": 20,
+    "afetados": 6,
+    "frota": 11
+   }
+  ],
+  "reincidentes": [
+   {
+    "frota": "60515",
+    "descricao": "VOLVO FMX 540",
+    "os": 9,
+    "parado": 8,
+    "horas": 339.6,
+    "ultima": "2026-10-03",
+    "tipo": "Verificar / regular"
+   },
+   {
+    "frota": "60512",
+    "descricao": "VOLVO FMX 540",
+    "os": 9,
+    "parado": 7,
+    "horas": 142.6,
+    "ultima": "2026-09-20",
+    "tipo": "Verificar / regular"
+   },
+   {
+    "frota": "60533",
+    "descricao": "VOLVO FM 540",
+    "os": 9,
+    "parado": 9,
+    "horas": 27.3,
+    "ultima": "2026-09-27",
+    "tipo": "Não engata / não trava"
+   },
+   {
+    "frota": "60525",
+    "descricao": "VOLVO FH 540",
+    "os": 8,
+    "parado": 8,
+    "horas": 24.0,
+    "ultima": "2026-09-28",
+    "tipo": "Não engata / não trava"
+   },
+   {
+    "frota": "60547",
+    "descricao": "VOLVO FM 540",
+    "os": 7,
+    "parado": 5,
+    "horas": 43.6,
+    "ultima": "2026-09-27",
+    "tipo": "Lubrificação / limpeza"
+   },
+   {
+    "frota": "60529",
+    "descricao": "VOLVO FM 540",
+    "os": 6,
+    "parado": 5,
+    "horas": 29.8,
+    "ultima": "2026-10-02",
+    "tipo": "Verificar / regular"
+   },
+   {
+    "frota": "60535",
+    "descricao": "VOLVO FM 540",
+    "os": 6,
+    "parado": 5,
+    "horas": 3.8,
+    "ultima": "2026-10-02",
+    "tipo": "Verificar / regular"
+   },
+   {
+    "frota": "60527",
+    "descricao": "VOLVO FM 540",
+    "os": 5,
+    "parado": 5,
+    "horas": 38.4,
+    "ultima": "2026-10-02",
+    "tipo": "Lubrificação / limpeza"
+   },
+   {
+    "frota": "60537",
+    "descricao": "VOLVO FM 540",
+    "os": 5,
+    "parado": 5,
+    "horas": 19.2,
+    "ultima": "2026-09-28",
+    "tipo": "Não engata / não trava"
+   },
+   {
+    "frota": "60534",
+    "descricao": "VOLVO FM 540",
+    "os": 5,
+    "parado": 4,
+    "horas": 17.4,
+    "ultima": "2026-09-27",
+    "tipo": "Verificar / regular"
+   }
+  ],
+  "exemplos": [
+   {
+    "texto": "Verificar quinta roda",
+    "os": 14
+   },
+   {
+    "texto": "Trocar quinta roda",
+    "os": 10
+   },
+   {
+    "texto": "Regular quinta roda",
+    "os": 8
+   },
+   {
+    "texto": "Lubrificar quinta roda",
+    "os": 7
+   },
+   {
+    "texto": "Problema na quinta roda",
+    "os": 6
+   },
+   {
+    "texto": "Quinta roda",
+    "os": 6
+   }
+  ]
+ },
  "gerado_em": "2026-10-05",
  "locais": [
   {
@@ -298,8 +545,8 @@
   }
  ],
  "abertas": {
-  "caminhoes": 34,
-  "os": 34,
+  "caminhoes": 33,
+  "os": 33,
   "mais_30d": 8,
   "lista": [
    {
@@ -378,7 +625,7 @@
     "frota": "61151",
     "descricao": "VOLVO VM 270",
     "desde": "2026-09-17",
-    "dias": 17,
+    "dias": 18,
     "motivo": "Câmbio / transmissão",
     "local": "Interna",
     "problema": "VERIFICAR CAIXA DE MARCHA / NAO PEGA NA PARTIDA -"
@@ -997,8 +1244,69 @@
     </div>
   </section>
 
+  <!-- F1 · foco: abertura -->
+  <section class="slide center foco" data-block="04" data-sec="Foco" data-accent="cream">
+    <div class="inner">
+      <div class="kicker r">Parte 4 · Foco</div>
+      <h1 class="r" data-t="foco_h1"></h1>
+      <p class="lead r" style="max-width:40ch" data-t="foco_lead"></p>
+    </div>
+  </section>
+
+  <!-- F2 · foco: números -->
+  <section class="slide foco" data-block="04" data-sec="Foco" data-accent="cream">
+    <div class="inner">
+      <div class="kicker r" data-t="foco_kicker"></div>
+      <h3 class="r" data-t="foco_kpi_titulo"></h3>
+      <div class="tri">
+        <div class="c r"><div class="n">Ordens de serviço</div><div class="t" data-t="foco_k_os"></div><div class="d" data-t="foco_k_os_d"></div></div>
+        <div class="c r"><div class="n">Caminhões afetados</div><div class="t" data-t="foco_k_cam"></div><div class="d" data-t="foco_k_cam_d"></div></div>
+        <div class="c r"><div class="n">Tempo parado</div><div class="t" data-t="foco_k_h"></div><div class="d" data-t="foco_k_h_d"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- F3 · foco: frequência e modelos -->
+  <section class="slide foco" data-block="04" data-sec="Foco" data-accent="cream">
+    <div class="inner">
+      <div class="kicker r" data-t="foco_kicker2"></div>
+      <h3 class="r" data-t="foco_sem_titulo"></h3>
+      <div class="pair">
+        <div class="r"><h4>OS por semana</h4><div class="cols" id="chFocoSem"></div></div>
+        <div class="r"><h4>OS por caminhão, por modelo</h4><div class="hbars" id="chFocoMod"></div></div>
+      </div>
+      <div class="note r" data-t="foco_sem_nota"></div>
+    </div>
+  </section>
+
+  <!-- F4 · foco: tipos de problema -->
+  <section class="slide foco" data-block="04" data-sec="Foco" data-accent="cream">
+    <div class="inner">
+      <div class="kicker r" data-t="foco_kicker3"></div>
+      <h3 class="r" data-t="foco_tipo_titulo"></h3>
+      <div class="pair">
+        <div class="r"><h4>Tipo de problema</h4><div class="hbars" id="chFocoTipo"></div></div>
+        <div class="r"><h4>Como aparece nas OS</h4><ul class="quotes" id="ulFocoEx"></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- F5 · foco: reincidência -->
+  <section class="slide foco" data-block="04" data-sec="Foco" data-accent="cream">
+    <div class="inner">
+      <div class="kicker r" data-t="foco_kicker4"></div>
+      <h3 class="r" data-t="foco_reinc_titulo"></h3>
+      <table class="rank r" id="tbFoco">
+        <thead><tr>
+          <th></th><th>Frota</th><th class="hide-sm">Modelo</th><th class="num">OS</th><th class="num hide-sm">Parado</th><th class="num">Horas</th><th class="hide-sm">Problema mais comum</th><th class="num">Última OS</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
   <!-- 13 · próximos passos -->
-  <section class="slide" data-block="04" data-sec="Próximos passos" data-accent="orange">
+  <section class="slide" data-block="05" data-sec="Próximos passos" data-accent="orange">
     <div class="inner">
       <div class="kicker r">Onde atacar primeiro</div>
       <ol class="steps" id="olPassos"></ol>
@@ -1006,7 +1314,7 @@
   </section>
 
   <!-- 14 · encerramento -->
-  <section class="slide center" data-block="04" data-sec="Encerramento" data-accent="orange">
+  <section class="slide center" data-block="05" data-sec="Encerramento" data-accent="orange">
     <div class="inner">
       <div class="kicker r">Disponibilidade da frota</div>
       <h1 class="r">Obrigado!</h1>
@@ -1023,7 +1331,7 @@
   <button class="ico" id="btnNext" aria-label="Próximo slide">→</button>
   <button class="ico" id="btnFull" aria-label="Tela cheia">Tela cheia</button>
 </div>
-<div class="chrome br"><span id="lblNum">01</span> / <span id="lblTot">15</span></div>
+<div class="chrome br"><span id="lblNum">01</span> / <span id="lblTot">20</span></div>
 <div id="bar" style="width:0"></div>
 
 <script>
@@ -1162,6 +1470,43 @@
   T.agora_titulo = nf(AB.caminhoes) + " caminhões com OS aberta agora" +
     (AB.mais_30d ? " — " + nf(AB.mais_30d) + " parados há mais de 30 dias." : ".");
 
+  // seção em foco (ex.: quinta roda)
+  var F = D.foco;
+  if(!F){
+    document.querySelectorAll(".slide.foco").forEach(function(sl){ sl.remove(); });
+  } else {
+    var nomeF = esc(F.nome), nomeFl = esc(F.nome.toLowerCase());
+    var mods = F.modelos.map(function(m){return esc(m.nome);});
+    var modsTxt = mods.length > 1 ? mods.slice(0,-1).join(", ") + " e " + mods[mods.length-1] : (mods[0] || "");
+    var semF = F.semanas.filter(function(w){return w.dias >= 4;});
+    var mediaSem = semF.length ? sum(semF,function(w){return w.os;}) / semF.length : 0;
+    // tendência: média das 2 últimas semanas contra a média das anteriores
+    var antes = semF.slice(0, -2), ult2 = semF.slice(-2);
+    var mAntes = antes.length ? sum(antes,function(w){return w.os;})/antes.length : 0;
+    var mUlt = ult2.length ? sum(ult2,function(w){return w.os;})/ult2.length : 0;
+    var tend = !antes.length ? "." : (mUlt < mAntes * 0.85 ? ", em queda nas duas últimas semanas." :
+      (mUlt > mAntes * 1.15 ? ", em alta nas duas últimas semanas." : ", sem sinal de queda."));
+    var periodoF = dm(D.inicio) + " a " + dm(D.fim);
+    T.foco_h1 = nomeF + ".";
+    T.foco_lead = nf(F.os) + " ordens de serviço em " + nf(D.dias) + " dias. <em>" + nf(F.caminhoes) + " de " + nf(F.base) +
+      " caminhões</em> " + modsTxt + " tiveram ao menos uma.";
+    T.foco_kicker = T.foco_kicker2 = T.foco_kicker3 = T.foco_kicker4 = nomeF + " · " + periodoF;
+    T.foco_kpi_titulo = "Cerca de " + nf(F.os / D.dias, 0) + " OS de " + nomeFl + " por dia — " + pct(F.pct_paradas, 0) + " de todas as paradas de caminhão.";
+    T.foco_k_os = nf(F.os);
+    T.foco_k_os_d = nf(F.os_parado) + " com o caminhão parado · " + nf(F.os / D.dias, 1) + " por dia.";
+    T.foco_k_cam = nf(F.caminhoes) + "<small>de " + nf(F.base) + "</small>";
+    T.foco_k_cam_d = pct(F.caminhoes / F.base, 0) + " dos caminhões " + modsTxt + ". " + nf(F.reincidentes_3) + " tiveram 3 ou mais OS.";
+    T.foco_k_h = durBig(F.horas);
+    T.foco_k_h_d = "Mediana de " + dur(F.mediana_h) + " por OS · " + pct(F.horas / totH, 1) + " de todo o tempo parado da frota.";
+    T.foco_sem_titulo = "Média de " + nf(mediaSem, 0) + " OS por semana" + tend;
+    T.foco_sem_nota = "Inclui OS com o caminhão parado e rodando. OS por caminhão = OS do período ÷ caminhões do modelo no cadastro.";
+    var t2 = F.tipos.slice(0, 2);
+    T.foco_tipo_titulo = t2.length > 1
+      ? "“" + esc(t2[0].nome) + "” e “" + esc(t2[1].nome) + "” somam " + pct((t2[0].os + t2[1].os) / F.os, 0) + " das OS de " + nomeFl + "."
+      : "Tipos de problema de " + nomeFl + ".";
+    T.foco_reinc_titulo = nf(F.reincidentes_3) + " caminhões tiveram 3 ou mais OS de " + nomeFl + " em " + nf(semF.length) + " semanas.";
+  }
+
   document.querySelectorAll("[data-t]").forEach(function(el){
     var k = el.getAttribute("data-t");
     if(T[k] != null) el.innerHTML = T[k];
@@ -1177,6 +1522,9 @@
     nf(ext.paradas) + " OS externas somaram " + nf(ext.horas,0) + " h paradas (" + pct(ext.horas/totH,0) + " do total), média de " + dur(ext.horas/ext.paradas) + " por OS."]);
   if(longas.length && longasP) passos.push(["Encurtar as paradas longas",
     "Paradas acima de " + D.corte_longa + " são " + pct(longasP/totP,0) + " das ocorrências e " + pct(longasH/totH,0) + " do tempo: peça, oficina externa e diagnóstico."]);
+  if(F && F.reincidentes.length) passos.push(["Atacar a reincidência de " + esc(F.nome.toLowerCase()),
+    F.reincidentes.slice(0,3).map(function(r){return esc(r.frota) + " (" + nf(r.os) + " OS)";}).join(", ") +
+    " lideram. Revisar causa, peça trocada e rotina de preventiva nos " + nf(F.reincidentes_3) + " caminhões com 3+ OS."]);
   passos.push(["Acompanhar toda semana" + (D.meta ? " contra a meta de " + pct(D.meta,0) : ""),
     "Mesmo indicador, mesma fonte, com o ranking de frotas e motivos atualizado."]);
   document.getElementById("olPassos").innerHTML = passos.map(function(p,i){
@@ -1361,6 +1709,31 @@
       '<td class="num">'+dmy(a.desde)+'</td><td class="num">'+nf(a.dias)+'</td>'+
       '<td class="mot" title="'+esc(a.problema||"")+'">'+esc(a.motivo)+'</td><td class="hide-sm">'+esc(a.local||"")+'</td></tr>';
   }).join("");
+
+  if(F){
+    var semCols = F.semanas.filter(function(w){return w.dias >= 4;});
+    cols(document.getElementById("chFocoSem"), semCols.map(function(w){
+      return { v:w.os, label:dm(w.inicio), txt:nf(w.os),
+        tip: tipHtml("Semana de " + dm(w.inicio), [["OS", nf(w.os)], ["Com caminhão parado", nf(w.parado)]]) };
+    }));
+    hbars(document.getElementById("chFocoMod"), F.modelos.map(function(m){
+      return { label:m.nome, v:m.os / m.frota, txt:nf(m.os / m.frota, 1) + " <em>· " + nf(m.afetados) + " de " + nf(m.frota) + "</em>",
+        tip: tipHtml(esc(m.nome), [["OS", nf(m.os)], ["Caminhões com OS", nf(m.afetados) + " de " + nf(m.frota)], ["OS por caminhão", nf(m.os / m.frota, 1)]]) };
+    }), {room:130});
+    hbars(document.getElementById("chFocoTipo"), F.tipos.map(function(t, i){
+      return { label:t.nome, v:t.os, mute:i >= 2, txt:nf(t.os) + " OS <em>· " + pct(t.os / F.os, 0) + "</em>",
+        tip: tipHtml(esc(t.nome), [["OS", nf(t.os)], ["% das OS", pct(t.os / F.os)], ["Horas paradas", nf(t.horas, 0) + " h"]]) };
+    }), {room:130});
+    document.getElementById("ulFocoEx").innerHTML = F.exemplos.map(function(x){
+      return '<li><b>' + nf(x.os) + '×</b><span>“' + esc(x.texto) + '”</span></li>';
+    }).join("");
+    document.querySelector("#tbFoco tbody").innerHTML = F.reincidentes.map(function(r, i){
+      return '<tr class="' + (i >= 3 ? 'mute' : '') + '"><td class="pos">' + String(i+1).padStart(2,"0") + '</td>' +
+        '<td class="f">' + esc(r.frota) + '</td><td class="hide-sm">' + esc(r.descricao || "") + '</td>' +
+        '<td class="num">' + nf(r.os) + '</td><td class="num hide-sm">' + nf(r.parado) + '</td><td class="num">' + nf(r.horas, 0) + ' h</td>' +
+        '<td class="mot hide-sm">' + esc(r.tipo) + '</td><td class="num">' + dm(r.ultima) + '</td></tr>';
+    }).join("");
+  }
 
   window.__drawCharts = drawLine;
   window.addEventListener("resize", drawLine);
