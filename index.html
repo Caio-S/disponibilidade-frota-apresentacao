@@ -735,10 +735,48 @@
    }
   ],
   "reboques": {
-   "desde": "0001-01-01",
-   "os_elegiveis": 449,
+   "desde": "2026-08-15",
+   "os_elegiveis": 153,
    "os_identificadas": 110,
-   "viagens": 5929,
+   "os_sem_viagem": 10,
+   "marcas": [
+    {
+     "marca": "Facchini",
+     "semis": 5,
+     "os": 11,
+     "viagens": 440,
+     "taxa": 2.5
+    },
+    {
+     "marca": "Rodofort",
+     "semis": 2,
+     "os": 4,
+     "viagens": 176,
+     "taxa": 2.27
+    },
+    {
+     "marca": "Sergomel",
+     "semis": 4,
+     "os": 6,
+     "viagens": 312,
+     "taxa": 1.92
+    },
+    {
+     "marca": "Santa Izabel",
+     "semis": 30,
+     "os": 45,
+     "viagens": 2376,
+     "taxa": 1.89
+    },
+    {
+     "marca": "Randon",
+     "semis": 24,
+     "os": 44,
+     "viagens": 2622,
+     "taxa": 1.68
+    }
+   ],
+   "viagens": 5928,
    "janela_h": 72,
    "taxa_media": 1.86,
    "semis": [
@@ -2284,9 +2322,13 @@
       T.foco_reb_titulo = s0.caminhoes >= 2
         ? "Semi-reboque " + esc(s0.reboque) + " estava engatado em " + nf(s0.os) + " OS de " + nomeFl + ", em " + nf(s0.caminhoes) + " caminhões diferentes."
         : "Semi-reboque " + esc(s0.reboque) + " estava engatado em " + nf(s0.os) + " OS de " + nomeFl + ".";
-      T.foco_reb_nota = "Reboques da última pesagem do caminhão até " + nf(RB.janela_h) + " h antes da OS. Pesagem disponível desde " + dm(RB.desde) +
-        ": " + nf(RB.os_identificadas) + " de " + nf(RB.os_elegiveis) + " OS identificadas. Média da frota: " + nf(RB.taxa_media, 2) +
-        " OS por 100 viagens — em laranja, semi-reboques com 3+ OS e taxa acima do dobro da média. O semi-reboque é o que engata na quinta roda.";
+      var mk = (RB.marcas || []).filter(function(m){ return m.viagens >= 100; })
+        .map(function(m){ return esc(m.marca) + " " + nf(m.taxa, 2); }).join(" · ");
+      T.foco_reb_nota = "Por marca de semi-reboque (OS por 100 viagens): " + mk + " · média " + nf(RB.taxa_media, 2) + ". " +
+        "Em laranja, semi-reboques com 3+ OS e taxa acima do dobro da média. Reboques da última pesagem do caminhão até " + nf(RB.janela_h) +
+        " h antes da OS; pesagem desde " + dm(RB.desde) + ": " + nf(RB.os_identificadas) + " de " + nf(RB.os_elegiveis) + " OS identificadas" +
+        (RB.os_sem_viagem ? " (" + nf(RB.os_sem_viagem) + " em caminhões sem viagem de cana: vinhaça, prancha etc.)" : "") +
+        ". O semi-reboque é o que engata na quinta roda.";
     }
   }
 
