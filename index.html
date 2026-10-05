@@ -2125,15 +2125,7 @@
     <div class="inner">
       <div class="kicker r">Onde atacar primeiro</div>
       <ol class="steps" id="olPassos"></ol>
-    </div>
-  </section>
-
-  <!-- 14 · encerramento -->
-  <section class="slide center" data-block="05" data-sec="Encerramento" data-accent="orange">
-    <div class="inner">
-      <div class="kicker r">Disponibilidade da frota</div>
-      <h1 class="r">Obrigado!</h1>
-      <p class="lead r" data-t="fonte"></p>
+      <div class="note r" data-t="fonte"></div>
     </div>
   </section>
 
@@ -2146,7 +2138,7 @@
   <button class="ico" id="btnNext" aria-label="Próximo slide">→</button>
   <button class="ico" id="btnFull" aria-label="Tela cheia">Tela cheia</button>
 </div>
-<div class="chrome br"><span id="lblNum">01</span> / <span id="lblTot">23</span></div>
+<div class="chrome br"><span id="lblNum">01</span> / <span id="lblTot">22</span></div>
 <div id="bar" style="width:0"></div>
 
 <script>
@@ -2268,7 +2260,7 @@
   T.conc_frase = "do tempo parado está em " + nf(top10.length) + " caminhões — " + pct(top10.length/D.frota_total,0) + " da frota.";
 
   T.aviso = D.aviso ? esc(D.aviso) : "";
-  T.fonte = (D.aviso ? esc(D.aviso) + "<br>" : "") + "Fonte: " + esc(D.fonte || "banco syscustoWeb") + " · dados de " + dmy(D.inicio) + " a " + dmy(D.fim) + ". " +
+  T.fonte = "Fonte: " + esc(D.fonte || "banco syscustoWeb") + " · dados de " + dmy(D.inicio) + " a " + dmy(D.fim) + ". " +
     "Parada = OS com o caminhão parado, da abertura à liberação; OS ainda abertas contam até o fim do período.";
 
   // onde fica parado
