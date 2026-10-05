@@ -1,0 +1,1509 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Disponibilidade da Frota</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --void:#1D1A40;
+    --deep:#1D1B33;
+    --surface:#2F2C40;
+    --ink:#F6F6F6;
+    --ink-2:#B7AFCE;
+    --ink-3:#8A7D90;
+    --line:rgba(109,95,115,.40);
+    --grid:rgba(183,175,206,.13);
+    --mute-bar:rgba(183,175,206,.32);
+    --orange:#FF730E;
+    --orange-2:#F29544;
+    --orange-deep:#A8480A;
+    --copper:#BF6F41;
+    --cream:#F2E1C2;
+    --indigo:#413D6C;
+    --accent:var(--orange);
+    --accent-text:var(--orange);
+    --accent-dim:rgba(255,115,14,.16);
+    --vign:rgba(12,10,28,.66);
+    color-scheme:dark;
+  }
+  [data-accent="cream"]{
+    --accent:var(--cream);
+    --accent-text:var(--cream);
+    --accent-dim:rgba(242,225,194,.10);
+  }
+  [data-accent="invert"]{
+    --void:#F2E1C2;
+    --deep:#F6F6F6;
+    --surface:#F6F6F6;
+    --ink:#1D1A40;
+    --ink-2:#413D6C;
+    --ink-3:#6D5F73;
+    --line:rgba(65,61,108,.26);
+    --grid:rgba(65,61,108,.14);
+    --mute-bar:rgba(65,61,108,.28);
+    --accent:var(--orange);
+    --accent-text:var(--orange-deep);
+    --accent-dim:rgba(255,115,14,.12);
+    --vign:rgba(191,111,65,.20);
+    color-scheme:light;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%;overflow:hidden;margin:0}
+  body{
+    background:var(--void);
+    color:var(--ink);
+    font-family:"Archivo","Segoe UI",system-ui,sans-serif;
+    font-size:14px;
+    -webkit-font-smoothing:antialiased;
+    cursor:default;
+    transition:background 800ms ease,color 800ms ease;
+  }
+
+  #field{position:fixed;inset:0;z-index:0;display:block}
+  .vign{
+    position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(120% 90% at 50% 45%, transparent 30%, var(--vign) 100%),
+      radial-gradient(70% 55% at 50% 40%, var(--accent-dim), transparent 70%);
+    transition:background 900ms ease;
+  }
+  #stage{position:fixed;inset:0;z-index:2}
+
+  /* ---------- chrome ---------- */
+  .chrome{
+    position:fixed;z-index:5;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
+    user-select:none;
+  }
+  .chrome.tl{top:26px;left:34px}
+  .chrome.tr{top:26px;right:34px;text-align:right;color:var(--ink-2)}
+  .chrome.tr b{color:var(--accent-text);font-weight:600;transition:color 700ms ease}
+  .chrome.br{bottom:24px;right:34px;font-variant-numeric:tabular-nums}
+  .chrome.bl{bottom:24px;left:34px;display:flex;gap:14px;align-items:center}
+  @media (max-width:720px){
+    .chrome.tl,.chrome.tr{top:14px}
+    .chrome.tl{left:16px}.chrome.tr{right:16px}
+    .chrome.br{right:16px;bottom:14px}.chrome.bl{left:16px;bottom:14px}
+    .chrome{font-size:9.5px}
+  }
+  @media (max-width:480px){ .chrome.tl{display:none} }
+  button.ico{
+    background:none;border:1px solid var(--line);color:var(--ink-3);
+    border-radius:2px;padding:5px 9px;cursor:pointer;font:inherit;letter-spacing:.1em;
+  }
+  button.ico:hover{color:var(--ink);border-color:var(--ink-3)}
+  button.ico:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  #bar{position:fixed;left:0;bottom:0;height:2px;background:var(--accent);z-index:6;transition:width 520ms cubic-bezier(.22,1,.36,1),background 700ms ease}
+
+  /* ---------- slides ---------- */
+  .slide{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(56px,6vw,110px) clamp(16px,6vw,110px);
+    opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity 620ms ease,visibility 620ms;
+  }
+  .slide.is-active{opacity:1;visibility:visible;pointer-events:auto}
+  .inner{width:100%;max-width:1180px;margin:0 auto}
+  .slide.center{text-align:center}
+  .slide.center .inner{max-width:1000px}
+
+  .r{opacity:0;transform:translateY(22px);transition:opacity 700ms cubic-bezier(.22,1,.36,1),transform 700ms cubic-bezier(.22,1,.36,1)}
+  .is-active .r{opacity:1;transform:none;transition-delay:var(--d,0ms)}
+
+  .kicker{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:min(1.5vw,14px);letter-spacing:.24em;text-transform:uppercase;
+    color:var(--accent-text);margin-bottom:min(3.2vh,30px);transition:color 700ms ease;
+  }
+  h1{font-size:min(8.4vw,11.6vh,118px);font-weight:700;letter-spacing:-.035em;line-height:.96;margin:0;text-wrap:balance}
+  h2{font-size:min(6.6vw,9.4vh,86px);font-weight:700;letter-spacing:-.03em;line-height:1.02;margin:0;text-wrap:balance}
+  h3{font-size:min(4.2vw,5.8vh,48px);font-weight:600;letter-spacing:-.02em;line-height:1.1;margin:0;text-wrap:balance}
+  .lead{
+    font-family:"Source Serif 4",Georgia,serif;
+    font-size:min(3vw,4.2vh,34px);line-height:1.42;color:var(--ink-2);
+    max-width:34ch;margin:min(3.4vh,30px) 0 0;
+  }
+  .slide.center .lead{margin-left:auto;margin-right:auto}
+  .lead em{font-style:italic;color:var(--ink)}
+  .say{
+    font-family:"Source Serif 4",Georgia,serif;font-style:italic;
+    font-size:min(4vw,5.6vh,46px);line-height:1.3;color:var(--ink);
+    max-width:28ch;margin:0;
+  }
+  .say b{font-style:normal;font-weight:400;color:var(--accent-text);transition:color 700ms ease}
+  .stat{
+    font-size:min(24vw,32vh,320px);font-weight:700;letter-spacing:-.06em;line-height:.82;
+    color:var(--accent);transition:color 700ms ease;
+  }
+  .stat small{font-size:.42em;letter-spacing:-.02em}
+  strong.hl{color:var(--accent-text);font-weight:700;transition:color 700ms ease}
+  .sub{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:min(1.5vw,2vh,15px);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-top:min(3vh,26px)}
+
+  /* three KPIs */
+  .tri{display:grid;grid-template-columns:repeat(3,1fr);gap:min(3vw,44px);margin-top:min(5vh,48px)}
+  .tri .c{border-top:2px solid var(--accent);padding-top:min(2.4vh,22px);transition:border-color 700ms ease}
+  .tri .n{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:min(1.4vw,13px);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);margin-bottom:min(1.4vh,12px)}
+  .tri .t{font-size:min(5.4vw,7.4vh,72px);font-weight:700;letter-spacing:-.035em;line-height:1;margin-bottom:min(1.6vh,14px)}
+  .tri .t small{font-size:.45em;font-weight:600;letter-spacing:-.01em;color:var(--ink-2);margin-left:.15em}
+  .tri .d{font-size:min(1.85vw,2.5vh,20px);color:var(--ink-2);line-height:1.45}
+  @media (max-width:760px){ .tri{grid-template-columns:1fr;gap:18px} .tri .d{font-size:15px} }
+
+  /* steps */
+  ol.steps{list-style:none;margin:min(5vh,44px) 0 0;padding:0;display:grid;gap:min(2.6vh,24px)}
+  ol.steps li{display:grid;grid-template-columns:auto 1fr;gap:min(2vw,26px);align-items:baseline}
+  ol.steps .num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:min(2.2vw,3vh,26px);font-weight:600;color:var(--accent-text)}
+  ol.steps .txt{font-size:min(2.8vw,3.8vh,32px);font-weight:500;letter-spacing:-.015em;line-height:1.2}
+  ol.steps .txt span{display:block;font-size:min(1.7vw,2.3vh,18px);font-weight:400;color:var(--ink-2);margin-top:6px;letter-spacing:0;line-height:1.45}
+
+  /* ---------- charts ---------- */
+  .chart{position:relative;width:100%;height:min(48vh,440px);margin-top:min(4vh,36px)}
+  .chart svg{display:block;overflow:visible}
+  .ax{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;fill:var(--ink-3);font-variant-numeric:tabular-nums}
+  .gl{stroke:var(--grid);stroke-width:1}
+  .lbl{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:13px;fill:var(--ink);font-weight:500}
+  .lbl.m{fill:var(--ink-2)}
+  .goal{stroke:var(--cream);stroke-width:1;stroke-dasharray:5 5;opacity:.75}
+  .goal-t{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;fill:var(--cream);letter-spacing:.06em}
+  .xh{stroke:var(--ink-3);stroke-width:1;opacity:0}
+
+  .tip{
+    position:absolute;z-index:4;pointer-events:none;
+    background:var(--deep);border:1px solid var(--line);border-radius:3px;
+    padding:9px 12px;font-size:13px;line-height:1.5;color:var(--ink);white-space:nowrap;
+    box-shadow:0 8px 28px rgba(0,0,0,.35);opacity:0;transition:opacity 120ms ease;
+  }
+  .tip .h{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin-bottom:3px}
+  .tip .row{display:flex;justify-content:space-between;gap:18px}
+  .tip .row span:first-child{color:var(--ink-2)}
+  .tip .row span:last-child{font-variant-numeric:tabular-nums;font-weight:600}
+
+  /* horizontal bars (ranking) */
+  .hbars{display:grid;gap:min(1.5vh,14px);margin-top:min(4.5vh,40px);position:relative}
+  .hb{display:grid;grid-template-columns:minmax(0,32%) 1fr;gap:min(2vw,24px);align-items:center;padding:2px 0}
+  .hb .lb{font-size:min(1.9vw,2.5vh,20px);color:var(--ink);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hb .tr{display:flex;align-items:center;gap:12px;min-width:0}
+  .hb .bar{height:min(2.6vh,22px);min-width:3px;border-radius:0 4px 4px 0;background:var(--orange);flex:none;transition:filter 120ms}
+  .hb.mute .bar{background:var(--mute-bar)}
+  .hb:hover .bar{filter:brightness(1.15)}
+  .hb .v{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:min(1.5vw,2vh,16px);color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .hb .v em{font-style:normal;color:var(--ink-3)}
+  .hbars.sm .hb .lb{font-size:min(1.6vw,2.2vh,17px)}
+  .hbars.sm .hb .bar{height:min(2.2vh,18px)}
+  .hbars.sm .hb .v{font-size:min(1.3vw,1.8vh,14px)}
+
+  /* columns */
+  .cols{display:flex;align-items:flex-end;justify-content:space-around;gap:6px;height:min(36vh,330px);margin:min(4vh,36px) 0 min(5vh,44px);border-bottom:1px solid var(--grid);position:relative}
+  .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;position:relative;min-width:0}
+  .col .v{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:min(1.5vw,2vh,15px);color:var(--ink);margin-bottom:8px;white-space:nowrap;font-weight:500}
+  .col .bar{width:min(3.4vw,40px);border-radius:4px 4px 0 0;background:var(--orange);min-height:2px;transition:filter 120ms}
+  .col.mute .bar{background:var(--mute-bar)}
+  .col:hover .bar{filter:brightness(1.15)}
+  .col .lb{position:absolute;top:100%;margin-top:10px;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:min(1.3vw,1.8vh,13px);letter-spacing:.06em;color:var(--ink-2);white-space:nowrap}
+
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:min(5vw,72px);margin-top:min(4vh,36px)}
+  .pair h4{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:min(1.4vw,13px);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);font-weight:500;margin:0;padding-bottom:min(1.4vh,12px);border-bottom:2px solid var(--accent)}
+  .pair .hbars{margin-top:min(3vh,26px)}
+  .pair .hb{grid-template-columns:minmax(0,42%) 1fr}
+  .pair .cols{height:min(30vh,280px)}
+  @media (max-width:760px){ .pair{grid-template-columns:1fr;gap:28px} .pair .cols{height:20vh} .slide{justify-content:safe center;overflow-y:auto} }
+
+  /* ranking table */
+  table.rank{width:100%;border-collapse:collapse;margin-top:min(3.6vh,32px);font-size:min(1.7vw,2.2vh,18px)}
+  .rank th{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:min(1.2vw,1.6vh,11px);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);font-weight:500;text-align:left;padding:0 12px min(1.2vh,10px);border-bottom:1px solid var(--line)}
+  .rank th.num{text-align:right}
+  .rank td{padding:min(1vh,9px) 12px;border-bottom:1px solid var(--grid);color:var(--ink-2);white-space:nowrap}
+  .rank td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:"IBM Plex Mono",ui-monospace,monospace;color:var(--ink)}
+  .rank td.pos{font-family:"IBM Plex Mono",ui-monospace,monospace;color:var(--ink-3);width:1%}
+  .rank td.f{color:var(--ink);font-weight:600}
+  .rank td.mot{max-width:22ch;overflow:hidden;text-overflow:ellipsis}
+  .rank .ib{display:flex;align-items:center;gap:12px}
+  .rank .ib i{display:block;height:min(1.6vh,14px);min-width:3px;border-radius:0 4px 4px 0;background:var(--orange);flex:none}
+  .rank tr.mute .ib i{background:var(--mute-bar)}
+  .rank .ib span{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;color:var(--ink)}
+  @media (max-width:760px){ .rank .hide-sm{display:none} .rank{font-size:13px} .rank td,.rank th{padding-left:6px;padding-right:6px} }
+
+  .note{font-size:min(1.5vw,2vh,15px);color:var(--ink-3);margin-top:min(2.4vh,20px)}
+
+  .hint{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-3);margin-top:min(6vh,54px);
+    animation:pulse 2.8s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
+
+  .empty{max-width:48ch;margin:0 auto;text-align:center}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important}
+    .r{transition:none;opacity:1;transform:none}
+    .slide{transition:opacity 1ms}
+  }
+  @media print{
+    html,body{overflow:visible;height:auto}
+    #field,.vign,.chrome,#bar{display:none}
+    #stage{position:static}
+    .slide{position:relative;opacity:1;visibility:visible;height:100vh;page-break-after:always}
+    .r{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<!--
+  Dados da apresentação. Gerado por scripts/gerar_dados.py a partir do export do banco.
+  Não edite à mão: rode o script de novo e ele substitui o bloco abaixo.
+-->
+<script id="dados" type="application/json">{
+ "escopo": "caminhões próprios",
+ "aviso": "O banco só tem ordens de serviço a partir de 15/08/2026 — de 07/04 a 14/08 não há registro nesta fonte.",
+ "gerado_em": "2026-10-05",
+ "locais": [
+  {
+   "nome": "Interna",
+   "horas": 21375.0,
+   "paradas": 1699
+  },
+  {
+   "nome": "Externa",
+   "horas": 15145.1,
+   "paradas": 36
+  },
+  {
+   "nome": "No campo",
+   "horas": 2651.7,
+   "paradas": 276
+  }
+ ],
+ "manutencoes": [
+  {
+   "nome": "Corretiva",
+   "horas": 29342.5,
+   "paradas": 1734
+  },
+  {
+   "nome": "Reforma",
+   "horas": 5059.3,
+   "paradas": 5
+  },
+  {
+   "nome": "Preventiva",
+   "horas": 4770.0,
+   "paradas": 272
+  }
+ ],
+ "abertas": {
+  "caminhoes": 34,
+  "os": 34,
+  "mais_30d": 8,
+  "lista": [
+   {
+    "frota": "60811",
+    "descricao": "VW 9180",
+    "desde": "2026-03-16",
+    "dias": 203,
+    "motivo": "Reforma",
+    "local": "Externa",
+    "problema": "REFORMA"
+   },
+   {
+    "frota": "60809",
+    "descricao": "M.BENZ 2729",
+    "desde": "2026-04-16",
+    "dias": 172,
+    "motivo": "Motor / arrefecimento",
+    "local": "Externa",
+    "problema": "MOTOR"
+   },
+   {
+    "frota": "60546",
+    "descricao": "VOLVO FM 540",
+    "desde": "2026-06-21",
+    "dias": 106,
+    "motivo": "Sinistro / acidente",
+    "local": "Externa",
+    "problema": "SINISTRO/ OFICINA EXTERNA - LIDER TACOGRAFO"
+   },
+   {
+    "frota": "60903",
+    "descricao": "VOLVO FH 520",
+    "desde": "2026-06-22",
+    "dias": 105,
+    "motivo": "Reforma",
+    "local": "Externa",
+    "problema": "REFORMA / RECOMPLETAR LIQUIDO DO ARREFECIMENTO / L. O CINTO DO MOTORIS"
+   },
+   {
+    "frota": "60914",
+    "descricao": "VOLVO VM 270",
+    "desde": "2026-07-21",
+    "dias": 76,
+    "motivo": "Reforma",
+    "local": "Externa",
+    "problema": "REFORMA"
+   },
+   {
+    "frota": "60805",
+    "descricao": "VW 8120",
+    "desde": "2026-08-04",
+    "dias": 62,
+    "motivo": "Reforma",
+    "local": "Externa",
+    "problema": "REFORMA."
+   },
+   {
+    "frota": "60518",
+    "descricao": "VOLVO FMX 540",
+    "desde": "2026-08-11",
+    "dias": 54,
+    "motivo": "Motor / arrefecimento",
+    "local": "Externa",
+    "problema": "MOTOR"
+   },
+   {
+    "frota": "61252",
+    "descricao": "VOLVO VM 330",
+    "desde": "2026-08-29",
+    "dias": 37,
+    "motivo": "Motor / arrefecimento",
+    "local": "Externa",
+    "problema": "MOTOR"
+   },
+   {
+    "frota": "61151",
+    "descricao": "VOLVO VM 270",
+    "desde": "2026-09-17",
+    "dias": 17,
+    "motivo": "Câmbio / transmissão",
+    "local": "Interna",
+    "problema": "VERIFICAR CAIXA DE MARCHA / NAO PEGA NA PARTIDA -"
+   },
+   {
+    "frota": "61251",
+    "descricao": "VOLVO VM 330",
+    "desde": "2026-09-18",
+    "dias": 17,
+    "motivo": "Freios / ar comprimido",
+    "local": "Externa",
+    "problema": "FREIO / SUSPENSAO"
+   }
+  ]
+ },
+ "fonte": "syscustoWeb · ordens de serviço e cadastro de frota",
+ "inicio": "2026-08-17",
+ "fim": "2026-10-04",
+ "dias": 49,
+ "frota_total": 106,
+ "frotas_com_parada": 103,
+ "meta": null,
+ "disp_media": 0.6858,
+ "horas_paradas": 39171.7,
+ "paradas": 2011,
+ "mediana_h": 3.4,
+ "corte_longa": "3 dias",
+ "semanas": [
+  {
+   "inicio": "2026-08-17",
+   "dias": 7,
+   "horas": 4747.2,
+   "disp": 0.7334
+  },
+  {
+   "inicio": "2026-08-24",
+   "dias": 7,
+   "horas": 5411.2,
+   "disp": 0.6961
+  },
+  {
+   "inicio": "2026-08-31",
+   "dias": 7,
+   "horas": 5566.2,
+   "disp": 0.6874
+  },
+  {
+   "inicio": "2026-09-07",
+   "dias": 7,
+   "horas": 5456.7,
+   "disp": 0.6936
+  },
+  {
+   "inicio": "2026-09-14",
+   "dias": 7,
+   "horas": 5536.1,
+   "disp": 0.6891
+  },
+  {
+   "inicio": "2026-09-21",
+   "dias": 7,
+   "horas": 6443.8,
+   "disp": 0.6382
+  },
+  {
+   "inicio": "2026-09-28",
+   "dias": 7,
+   "horas": 6010.6,
+   "disp": 0.6625
+  }
+ ],
+ "meses": [
+  {
+   "mes": "2026-08",
+   "dias": 15,
+   "parcial": true,
+   "horas": 11066.8,
+   "paradas": 655,
+   "horas_eventos": 19860.7,
+   "disp": 0.71
+  },
+  {
+   "mes": "2026-09",
+   "dias": 30,
+   "parcial": false,
+   "horas": 24839.4,
+   "paradas": 1231,
+   "horas_eventos": 18346.3,
+   "disp": 0.6745
+  },
+  {
+   "mes": "2026-10",
+   "dias": 4,
+   "parcial": true,
+   "horas": 3265.5,
+   "paradas": 125,
+   "horas_eventos": 964.8,
+   "disp": 0.6791
+  }
+ ],
+ "motivos": [
+  {
+   "nome": "Motor / arrefecimento",
+   "horas": 10664.0,
+   "paradas": 322
+  },
+  {
+   "nome": "Reforma",
+   "horas": 5059.3,
+   "paradas": 5
+  },
+  {
+   "nome": "Preventiva",
+   "horas": 4770.0,
+   "paradas": 272
+  },
+  {
+   "nome": "Elétrica",
+   "horas": 4144.3,
+   "paradas": 403
+  },
+  {
+   "nome": "Câmbio / transmissão",
+   "horas": 2994.6,
+   "paradas": 74
+  },
+  {
+   "nome": "Freios / ar comprimido",
+   "horas": 2389.8,
+   "paradas": 216
+  },
+  {
+   "nome": "Pneus / rodas",
+   "horas": 1860.6,
+   "paradas": 241
+  },
+  {
+   "nome": "Sinistro / acidente",
+   "horas": 1541.8,
+   "paradas": 3
+  },
+  {
+   "nome": "Ar-condicionado / cabine",
+   "horas": 1252.3,
+   "paradas": 104
+  },
+  {
+   "nome": "Suspensão / direção",
+   "horas": 1181.3,
+   "paradas": 45
+  },
+  {
+   "nome": "Hidráulico / implemento",
+   "horas": 1098.7,
+   "paradas": 82
+  },
+  {
+   "nome": "Estrutura / solda",
+   "horas": 843.9,
+   "paradas": 49
+  },
+  {
+   "nome": "Quinta roda / engate",
+   "horas": 802.9,
+   "paradas": 87
+  },
+  {
+   "nome": "Outros",
+   "horas": 460.1,
+   "paradas": 99
+  },
+  {
+   "nome": "Lavagem / pit stop",
+   "horas": 108.2,
+   "paradas": 9
+  }
+ ],
+ "duracao": [
+  {
+   "faixa": "até 2 h",
+   "paradas": 761,
+   "horas": 687.7,
+   "longa": false
+  },
+  {
+   "faixa": "2–8 h",
+   "paradas": 600,
+   "horas": 2515.2,
+   "longa": false
+  },
+  {
+   "faixa": "8–24 h",
+   "paradas": 365,
+   "horas": 4929.1,
+   "longa": false
+  },
+  {
+   "faixa": "1–3 dias",
+   "paradas": 188,
+   "horas": 7106.6,
+   "longa": false
+  },
+  {
+   "faixa": "3–7 dias",
+   "paradas": 59,
+   "horas": 5846.3,
+   "longa": true
+  },
+  {
+   "faixa": "+7 dias",
+   "paradas": 38,
+   "horas": 18086.8,
+   "longa": true
+  }
+ ],
+ "frotas": [
+  {
+   "frota": "60518",
+   "descricao": "VOLVO FMX 540",
+   "horas": 1176.0,
+   "paradas": 1,
+   "disp": 0.0,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60546",
+   "descricao": "VOLVO FM 540",
+   "horas": 1176.0,
+   "paradas": 1,
+   "disp": 0.0,
+   "motivo": "Sinistro / acidente"
+  },
+  {
+   "frota": "60805",
+   "descricao": "VW 8120",
+   "horas": 1176.0,
+   "paradas": 1,
+   "disp": 0.0,
+   "motivo": "Reforma"
+  },
+  {
+   "frota": "60809",
+   "descricao": "M.BENZ 2729",
+   "horas": 1176.0,
+   "paradas": 1,
+   "disp": 0.0,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60811",
+   "descricao": "VW 9180",
+   "horas": 1176.0,
+   "paradas": 1,
+   "disp": 0.0,
+   "motivo": "Reforma"
+  },
+  {
+   "frota": "60903",
+   "descricao": "VOLVO FH 520",
+   "horas": 1176.0,
+   "paradas": 1,
+   "disp": 0.0,
+   "motivo": "Reforma"
+  },
+  {
+   "frota": "60914",
+   "descricao": "VOLVO VM 270",
+   "horas": 1176.0,
+   "paradas": 1,
+   "disp": 0.0,
+   "motivo": "Reforma"
+  },
+  {
+   "frota": "60904",
+   "descricao": "VOLVO FH 520",
+   "horas": 1146.0,
+   "paradas": 2,
+   "disp": 0.0255,
+   "motivo": "Câmbio / transmissão"
+  },
+  {
+   "frota": "61252",
+   "descricao": "VOLVO VM 330",
+   "horas": 1117.6,
+   "paradas": 2,
+   "disp": 0.0497,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60520",
+   "descricao": "VOLVO FMX 540",
+   "horas": 932.7,
+   "paradas": 17,
+   "disp": 0.2069,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60500",
+   "descricao": "VOLVO FMX 540",
+   "horas": 766.8,
+   "paradas": 27,
+   "disp": 0.348,
+   "motivo": "Preventiva"
+  },
+  {
+   "frota": "60522",
+   "descricao": "VOLVO FH 540",
+   "horas": 736.5,
+   "paradas": 24,
+   "disp": 0.3737,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "61251",
+   "descricao": "VOLVO VM 330",
+   "horas": 726.3,
+   "paradas": 9,
+   "disp": 0.3824,
+   "motivo": "Freios / ar comprimido"
+  },
+  {
+   "frota": "61250",
+   "descricao": "VOLVO VM 330",
+   "horas": 710.0,
+   "paradas": 35,
+   "disp": 0.3963,
+   "motivo": "Elétrica"
+  },
+  {
+   "frota": "61002",
+   "descricao": "MUNCK VW 11180",
+   "horas": 675.3,
+   "paradas": 5,
+   "disp": 0.4258,
+   "motivo": "Suspensão / direção"
+  },
+  {
+   "frota": "61151",
+   "descricao": "VOLVO VM 270",
+   "horas": 662.4,
+   "paradas": 13,
+   "disp": 0.4368,
+   "motivo": "Câmbio / transmissão"
+  },
+  {
+   "frota": "60501",
+   "descricao": "VOLVO FMX 540",
+   "horas": 620.1,
+   "paradas": 14,
+   "disp": 0.4727,
+   "motivo": "Pneus / rodas"
+  },
+  {
+   "frota": "60536",
+   "descricao": "VOLVO FH 540",
+   "horas": 605.3,
+   "paradas": 33,
+   "disp": 0.4853,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60515",
+   "descricao": "VOLVO FMX 540",
+   "horas": 582.4,
+   "paradas": 41,
+   "disp": 0.5048,
+   "motivo": "Quinta roda / engate"
+  },
+  {
+   "frota": "60505",
+   "descricao": "VOLVO FMX 540",
+   "horas": 571.6,
+   "paradas": 24,
+   "disp": 0.5139,
+   "motivo": "Freios / ar comprimido"
+  },
+  {
+   "frota": "60535",
+   "descricao": "VOLVO FM 540",
+   "horas": 565.0,
+   "paradas": 38,
+   "disp": 0.5195,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60917",
+   "descricao": "VOLVO VM 270",
+   "horas": 555.7,
+   "paradas": 21,
+   "disp": 0.5275,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60533",
+   "descricao": "VOLVO FM 540",
+   "horas": 520.0,
+   "paradas": 33,
+   "disp": 0.5578,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "61152",
+   "descricao": "VOLVO VM 270",
+   "horas": 491.6,
+   "paradas": 13,
+   "disp": 0.5819,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60530",
+   "descricao": "VOLVO FM 540",
+   "horas": 488.0,
+   "paradas": 13,
+   "disp": 0.5851,
+   "motivo": "Reforma"
+  },
+  {
+   "frota": "60916",
+   "descricao": "VOLVO VM 290",
+   "horas": 475.0,
+   "paradas": 21,
+   "disp": 0.5961,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60503",
+   "descricao": "VOLVO FMX 540",
+   "horas": 466.8,
+   "paradas": 13,
+   "disp": 0.6031,
+   "motivo": "Preventiva"
+  },
+  {
+   "frota": "60514",
+   "descricao": "VOLVO FMX 540",
+   "horas": 464.9,
+   "paradas": 17,
+   "disp": 0.6046,
+   "motivo": "Preventiva"
+  },
+  {
+   "frota": "60517",
+   "descricao": "VOLVO FMX 540",
+   "horas": 462.9,
+   "paradas": 38,
+   "disp": 0.6063,
+   "motivo": "Sinistro / acidente"
+  },
+  {
+   "frota": "60534",
+   "descricao": "VOLVO FM 540",
+   "horas": 449.4,
+   "paradas": 31,
+   "disp": 0.6179,
+   "motivo": "Estrutura / solda"
+  }
+ ]
+}</script>
+
+<canvas id="field"></canvas>
+<div class="vign"></div>
+
+<div id="stage">
+
+  <!-- 1 · capa -->
+  <section class="slide center" data-block="01" data-sec="Abertura" data-accent="orange">
+    <div class="inner">
+      <div class="kicker r" data-t="periodo_longo"></div>
+      <h1 class="r">Disponibilidade<br>da frota de<br>caminhões.</h1>
+      <p class="lead r">Quanto rodamos, por que paramos e quais frotas mais pesaram no período.</p>
+      <div class="sub r" data-t="aviso"></div>
+      <div class="hint r">use as setas · → para avançar</div>
+    </div>
+  </section>
+
+  <!-- 2 · número principal -->
+  <section class="slide center" data-block="01" data-sec="Visão geral" data-accent="orange">
+    <div class="inner">
+      <div class="kicker r">Disponibilidade média no período</div>
+      <div class="stat r" data-t="disp_media_big"></div>
+      <h3 class="r" style="margin-top:min(3.4vh,30px)" data-t="disp_frase"></h3>
+      <div class="sub r" data-t="disp_sub"></div>
+    </div>
+  </section>
+
+  <!-- 3 · KPIs -->
+  <section class="slide" data-block="01" data-sec="Visão geral" data-accent="orange">
+    <div class="inner">
+      <div class="kicker r">O tamanho da parada</div>
+      <h3 class="r" data-t="kpi_titulo"></h3>
+      <div class="tri">
+        <div class="c r"><div class="n">Tempo parado</div><div class="t" data-t="kpi_horas"></div><div class="d" data-t="kpi_horas_d"></div></div>
+        <div class="c r"><div class="n">Paradas registradas</div><div class="t" data-t="kpi_paradas"></div><div class="d" data-t="kpi_paradas_d"></div></div>
+        <div class="c r"><div class="n">Tempo médio por parada</div><div class="t" data-t="kpi_mttr"></div><div class="d" data-t="kpi_mttr_d"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · evolução semanal -->
+  <section class="slide" data-block="01" data-sec="Evolução" data-accent="orange">
+    <div class="inner">
+      <div class="kicker r">Disponibilidade semana a semana</div>
+      <h3 class="r" data-t="evol_titulo"></h3>
+      <div class="chart r" id="chEvol" role="img" aria-label="Disponibilidade semanal da frota"></div>
+    </div>
+  </section>
+
+  <!-- 5 · mês a mês -->
+  <section class="slide" data-block="01" data-sec="Evolução" data-accent="orange">
+    <div class="inner">
+      <div class="kicker r">Mês a mês · paramos mais ou demoramos mais?</div>
+      <h3 class="r" data-t="mes_titulo"></h3>
+      <div class="pair">
+        <div class="r"><h4>Novas paradas por dia</h4><div class="cols" id="chMesFreq"></div></div>
+        <div class="r"><h4>Tempo médio por parada</h4><div class="cols" id="chMesMttr"></div></div>
+      </div>
+      <div class="note r" data-t="mes_nota"></div>
+    </div>
+  </section>
+
+  <!-- 6 · divisor motivos -->
+  <section class="slide center" data-block="02" data-sec="Motivos" data-accent="cream">
+    <div class="inner">
+      <div class="kicker r">Parte 2</div>
+      <h1 class="r">Por que<br>os caminhões param?</h1>
+    </div>
+  </section>
+
+  <!-- 7 · pareto de motivos -->
+  <section class="slide" data-block="02" data-sec="Motivos" data-accent="cream">
+    <div class="inner">
+      <div class="kicker r">Horas paradas por motivo</div>
+      <h3 class="r" data-t="mot_titulo"></h3>
+      <div class="hbars r" id="chMotivos"></div>
+      <div class="note r" data-t="mot_nota"></div>
+    </div>
+  </section>
+
+  <!-- 8 · tempo parado -->
+  <section class="slide" data-block="02" data-sec="Tempo parado" data-accent="cream">
+    <div class="inner">
+      <div class="kicker r">Quanto tempo cada parada dura</div>
+      <h3 class="r" data-t="dur_titulo"></h3>
+      <div class="pair">
+        <div class="r"><h4>Paradas por duração</h4><div class="cols" id="chDur"></div></div>
+        <div class="r"><h4>Tempo médio por motivo</h4><div class="hbars sm" id="chMttrMot"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8b · onde fica parado -->
+  <section class="slide" data-block="02" data-sec="Onde fica parado" data-accent="cream">
+    <div class="inner">
+      <div class="kicker r">Onde o caminhão fica parado</div>
+      <h3 class="r" data-t="local_titulo"></h3>
+      <div class="pair">
+        <div class="r"><h4>Horas paradas por local da OS</h4><div class="hbars" id="chLocalH"></div></div>
+        <div class="r"><h4>Tempo médio por OS</h4><div class="hbars" id="chLocalM"></div></div>
+      </div>
+      <div class="note r" data-t="local_nota"></div>
+    </div>
+  </section>
+
+  <!-- 9 · divisor frotas -->
+  <section class="slide center" data-block="03" data-sec="Frotas" data-accent="orange">
+    <div class="inner">
+      <div class="kicker r">Parte 3</div>
+      <h1 class="r">Onde está<br>o problema?</h1>
+      <p class="lead r">As frotas que mais ficaram paradas no período.</p>
+    </div>
+  </section>
+
+  <!-- 10 · ranking de frotas -->
+  <section class="slide" data-block="03" data-sec="Frotas críticas" data-accent="orange">
+    <div class="inner">
+      <div class="kicker r">Top 10 · frotas com mais horas paradas</div>
+      <h3 class="r" data-t="frota_titulo"></h3>
+      <table class="rank r" id="tbFrotas">
+        <thead><tr>
+          <th></th><th>Frota</th><th>Horas paradas</th><th class="num">Paradas</th><th class="num">Disp.</th><th class="hide-sm">Motivo principal</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 11 · destaque -->
+  <section class="slide" data-block="03" data-sec="Frotas críticas" data-accent="orange">
+    <div class="inner">
+      <div class="kicker r">O caso mais grave</div>
+      <p class="say r" data-t="pior_frase"></p>
+      <p class="lead r" style="max-width:46ch" data-t="pior_lead"></p>
+    </div>
+  </section>
+
+  <!-- 12 · concentração -->
+  <section class="slide center" data-block="03" data-sec="Frotas críticas" data-accent="invert">
+    <div class="inner">
+      <div class="kicker r">Concentração do problema</div>
+      <div class="stat r" data-t="conc_big"></div>
+      <h3 class="r" style="margin-top:min(3vh,26px)" data-t="conc_frase"></h3>
+    </div>
+  </section>
+
+  <!-- 12b · situação atual -->
+  <section class="slide" data-block="03" data-sec="Situação atual" data-accent="orange">
+    <div class="inner">
+      <div class="kicker r" data-t="agora_kicker"></div>
+      <h3 class="r" data-t="agora_titulo"></h3>
+      <table class="rank r" id="tbAbertas">
+        <thead><tr>
+          <th>Frota</th><th class="hide-sm">Modelo</th><th class="num">Parado desde</th><th class="num">Dias</th><th>Motivo</th><th class="hide-sm">Local</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 13 · próximos passos -->
+  <section class="slide" data-block="04" data-sec="Próximos passos" data-accent="orange">
+    <div class="inner">
+      <div class="kicker r">Onde atacar primeiro</div>
+      <ol class="steps" id="olPassos"></ol>
+    </div>
+  </section>
+
+  <!-- 14 · encerramento -->
+  <section class="slide center" data-block="04" data-sec="Encerramento" data-accent="orange">
+    <div class="inner">
+      <div class="kicker r">Disponibilidade da frota</div>
+      <h1 class="r">Obrigado!</h1>
+      <p class="lead r" data-t="fonte"></p>
+    </div>
+  </section>
+
+</div>
+
+<div class="chrome tl">Disponibilidade da Frota</div>
+<div class="chrome tr">Parte <b id="lblBlock">01</b> · <span id="lblSec">Abertura</span></div>
+<div class="chrome bl">
+  <button class="ico" id="btnPrev" aria-label="Slide anterior">←</button>
+  <button class="ico" id="btnNext" aria-label="Próximo slide">→</button>
+  <button class="ico" id="btnFull" aria-label="Tela cheia">Tela cheia</button>
+</div>
+<div class="chrome br"><span id="lblNum">01</span> / <span id="lblTot">15</span></div>
+<div id="bar" style="width:0"></div>
+
+<script>
+/* ================== dados → textos e gráficos ================== */
+(function(){
+  var D = null;
+  try{ D = JSON.parse(document.getElementById("dados").textContent); }catch(e){}
+
+  if(!D){
+    document.getElementById("stage").innerHTML =
+      '<section class="slide center is-active" data-block="00" data-sec="Sem dados" data-accent="orange"><div class="inner empty">' +
+      '<div class="kicker">Sem dados</div><h3>Rode <code>scripts/gerar_dados.py</code> para preencher a apresentação.</h3></div></section>';
+    return;
+  }
+
+  /* ---------- formatação pt-BR ---------- */
+  function nf(v,d){ d=d||0; return Number(v).toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d}); }
+  function pct(v,d){ return nf(v*100, d==null?1:d) + "%"; }
+  function dm(s){ var p=s.split("-"); return p[2]+"/"+p[1]; }
+  function dmy(s){ var p=s.split("-"); return p[2]+"/"+p[1]+"/"+p[0]; }
+  var MESES=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+  var MESES_L=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+  function mes(s){ var p=s.split("-"); return MESES[+p[1]-1]; }
+  function dataLonga(s){ var p=s.split("-"); return (+p[2])+" de "+MESES_L[+p[1]-1]; }
+  function dur(h){
+    if(h>=48) return nf(h/24, h/24>=10?0:1)+" dias";
+    if(h>=1) return nf(h, h>=10?0:1)+" h";
+    return nf(h*60,0)+" min";
+  }
+  function durBig(h){
+    if(h>=48) return nf(h/24, h/24>=10?0:1)+"<small>dias</small>";
+    return nf(h, h>=10?0:1)+"<small>h</small>";
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  function sum(a,f){ var s=0; for(var i=0;i<a.length;i++) s+=f(a[i]); return s; }
+
+  /* ---------- números derivados ---------- */
+  var totH = D.horas_paradas, totP = D.paradas;
+  var motivos = D.motivos.slice().sort(function(a,b){return b.horas-a.horas;});
+  var frotas = D.frotas.slice().sort(function(a,b){return b.horas-a.horas;});
+  var semanas = D.semanas || [];
+  var meses = D.meses || [];
+
+  // pareto: quantos motivos fazem 80% das horas
+  var acc=0, n80=0;
+  for(var i=0;i<motivos.length;i++){ acc+=motivos[i].horas; n80=i+1; if(acc/totH>=0.8) break; }
+  var pct80 = acc/totH;
+
+  var top10 = frotas.slice(0,10);
+  var top10H = sum(top10,function(f){return f.horas;});
+  var pior = frotas[0];
+
+  var semOk = semanas.filter(function(s){return s.dias>=4;});  // ignora semanas parciais nos extremos
+  var melhor = semOk.reduce(function(a,b){return b.disp>a.disp?b:a;}, semOk[0]||{});
+  var piorSem = semOk.reduce(function(a,b){return b.disp<a.disp?b:a;}, semOk[0]||{});
+
+  var longas = (D.duracao||[]).filter(function(d){return d.longa;});
+  var longasP = sum(longas,function(d){return d.paradas;}), longasH = sum(longas,function(d){return d.horas;});
+
+  var T = {};
+  T.periodo_longo = (D.escopo ? D.escopo.replace(/^./,function(c){return c.toUpperCase();}) : "Frota") + " · " + dm(D.inicio) + " a " + dm(D.fim) + " de " + D.fim.slice(0,4);
+  T.disp_media_big = nf(D.disp_media*100,1).replace(/,(\d)$/,'<small>,$1%</small>');
+  T.disp_frase = D.meta
+    ? (D.disp_media>=D.meta ? "Acima da meta de " + pct(D.meta,0) + "." : "Abaixo da meta de " + pct(D.meta,0) + " — faltaram " + nf((D.meta-D.disp_media)*100,1) + " p.p.")
+    : "do tempo a frota esteve pronta para operar.";
+  T.disp_sub = nf(D.frota_total) + " caminhões · " + nf(D.dias) + " dias · " + dataLonga(D.inicio) + " a " + dataLonga(D.fim);
+
+  T.kpi_titulo = "Em " + nf(D.dias) + " dias, a frota acumulou " + dur(totH) + " parada.";
+  T.kpi_horas = durBig(totH);
+  T.kpi_horas_d = "Equivale a " + nf(totH/24/D.dias,1) + " caminhões parados todos os dias, em média.";
+  T.kpi_paradas = nf(totP);
+  T.kpi_paradas_d = nf(totP/D.dias,1) + " novas paradas por dia · " + nf(D.frotas_com_parada) + " de " + nf(D.frota_total) + " caminhões pararam ao menos uma vez.";
+  T.kpi_mttr = durBig(totH/totP);
+  T.kpi_mttr_d = "Da abertura da parada até o caminhão voltar a rodar. Mediana: " + dur(D.mediana_h) + ".";
+
+  if(semOk.length){
+    T.evol_titulo = "Melhor semana: " + pct(melhor.disp) + " (" + dm(melhor.inicio) + "). Pior: " + pct(piorSem.disp) + " (" + dm(piorSem.inicio) + ").";
+  }
+  var mCheios = meses.filter(function(mm){return !mm.parcial && mm.paradas;});
+  if(mCheios.length<2) mCheios = meses.filter(function(mm){return mm.paradas;});
+  if(mCheios.length>=2){
+    var mPri = mCheios[0], mUlt = mCheios[mCheios.length-1];
+    var dF = (mUlt.paradas/mUlt.dias)/(mPri.paradas/mPri.dias)-1;
+    var dT = (mUlt.horas_eventos/mUlt.paradas)/(mPri.horas_eventos/mPri.paradas)-1;
+    function var_(x){ return (x>0?"+":"−") + nf(Math.abs(x)*100,0) + "%"; }
+    T.mes_titulo = "De " + mes(mPri.mes) + " para " + mes(mUlt.mes) + ": " +
+      (Math.abs(dF)<0.03 ? "mesma frequência de paradas" : (dF>0?"mais":"menos") + " paradas por dia (" + var_(dF) + ")") + " e " +
+      (Math.abs(dT)<0.03 ? "mesmo tempo de reparo." : "reparo " + (dT>0?"mais lento":"mais rápido") + " (" + var_(dT) + ").");
+  }
+  // com menos de 2 meses cheios a comparação mês a mês engana: tira o slide
+  if(meses.filter(function(mm){return !mm.parcial && mm.paradas;}).length < 2){
+    var sMes = document.getElementById("chMesFreq").closest(".slide");
+    if(sMes) sMes.remove();
+  }
+  var parciais = meses.filter(function(mm){return mm.parcial;});
+  T.mes_nota = parciais.length ? "* Mês parcial: " + parciais.map(function(mm){return mes(mm.mes)+" ("+mm.dias+" dias)";}).join(", ") + ". No mês atual, paradas ainda abertas puxam o tempo médio para baixo." : "";
+
+  T.mot_titulo = n80 === 1
+    ? "Um único motivo responde por " + pct(pct80,0) + " do tempo parado."
+    : n80 + " motivos concentram " + pct(pct80,0) + " de todo o tempo parado.";
+  T.mot_nota = "Em laranja, os motivos que somam " + pct(pct80,0) + " das horas paradas. Valores: horas paradas · % do total.";
+
+  var mttrMot = motivos.filter(function(m){return m.paradas>=3;}).map(function(m){return {nome:m.nome, v:m.horas/m.paradas, paradas:m.paradas, horas:m.horas};})
+    .sort(function(a,b){return b.v-a.v;});
+  T.dur_titulo = longas.length && longasP
+    ? "Só " + pct(longasP/totP,0) + " das paradas passam de " + D.corte_longa + ", mas elas somam " + pct(longasH/totH,0) + " do tempo parado."
+    : "Duração das paradas no período.";
+
+  T.frota_titulo = "As 10 piores somam " + pct(top10H/totH,0) + " das horas paradas — " + nf(top10.length) + " de " + nf(D.frota_total) + " caminhões.";
+
+  if(pior){
+    T.pior_frase = "A frota <b>" + esc(pior.frota) + "</b> ficou <b>" + dur(pior.horas) + "</b> parada no período" +
+      (pior.motivo ? ", principalmente por <b>" + esc(pior.motivo.toLowerCase()) + "</b>." : ".");
+    T.pior_lead = "Foram " + nf(pior.paradas) + " parada" + (pior.paradas>1?"s":"") + " e disponibilidade de " + pct(pior.disp) +
+      " — contra " + pct(D.disp_media) + " da frota. Sozinha, ela responde por " + pct(pior.horas/totH) + " de todo o tempo parado.";
+  }
+
+  T.conc_big = nf(top10H/totH*100,0) + "<small>%</small>";
+  T.conc_frase = "do tempo parado está em " + nf(top10.length) + " caminhões — " + pct(top10.length/D.frota_total,0) + " da frota.";
+
+  T.aviso = D.aviso ? esc(D.aviso) : "";
+  T.fonte = (D.aviso ? esc(D.aviso) + "<br>" : "") + "Fonte: " + esc(D.fonte || "banco syscustoWeb") + " · dados de " + dmy(D.inicio) + " a " + dmy(D.fim) + ". " +
+    "Parada = OS com o caminhão parado, da abertura à liberação; OS ainda abertas contam até o fim do período.";
+
+  // onde fica parado
+  var locais = (D.locais||[]).filter(function(l){return l.paradas;});
+  var ext = locais.filter(function(l){return /extern/i.test(l.nome);})[0];
+  T.local_titulo = ext
+    ? "OS externas são " + pct(ext.paradas/totP,0) + " das paradas, mas " + pct(ext.horas/totH,0) + " de todo o tempo parado."
+    : "Horas paradas por local da OS.";
+  T.local_nota = (D.manutencoes||[]).map(function(m){return esc(m.nome) + ": " + nf(m.horas,0) + " h em " + nf(m.paradas) + " OS";}).join(" · ");
+
+  // situação atual
+  var AB = D.abertas || {caminhoes:0, lista:[]};
+  T.agora_kicker = "Situação em " + dmy(D.gerado_em || D.fim);
+  T.agora_titulo = nf(AB.caminhoes) + " caminhões com OS aberta agora" +
+    (AB.mais_30d ? " — " + nf(AB.mais_30d) + " parados há mais de 30 dias." : ".");
+
+  document.querySelectorAll("[data-t]").forEach(function(el){
+    var k = el.getAttribute("data-t");
+    if(T[k] != null) el.innerHTML = T[k];
+  });
+
+  /* ---------- próximos passos (gerados dos dados; ajuste o texto se quiser) ---------- */
+  var passos = [];
+  if(motivos[0]) passos.push(["Atacar “" + esc(motivos[0].nome) + "”",
+    pct(motivos[0].horas/totH,0) + " do tempo parado · " + nf(motivos[0].paradas) + " paradas · média de " + dur(motivos[0].horas/motivos[0].paradas) + " cada."]);
+  if(top10.length) passos.push(["Plano individual para as frotas críticas",
+    top10.slice(0,5).map(function(f){return esc(f.frota);}).join(", ") + " lideram o ranking. As 10 piores somam " + pct(top10H/totH,0) + " das horas paradas."]);
+  if(ext && ext.horas/totH > 0.25) passos.push(["Cobrar prazo das oficinas externas",
+    nf(ext.paradas) + " OS externas somaram " + nf(ext.horas,0) + " h paradas (" + pct(ext.horas/totH,0) + " do total), média de " + dur(ext.horas/ext.paradas) + " por OS."]);
+  if(longas.length && longasP) passos.push(["Encurtar as paradas longas",
+    "Paradas acima de " + D.corte_longa + " são " + pct(longasP/totP,0) + " das ocorrências e " + pct(longasH/totH,0) + " do tempo: peça, oficina externa e diagnóstico."]);
+  passos.push(["Acompanhar toda semana" + (D.meta ? " contra a meta de " + pct(D.meta,0) : ""),
+    "Mesmo indicador, mesma fonte, com o ranking de frotas e motivos atualizado."]);
+  document.getElementById("olPassos").innerHTML = passos.map(function(p,i){
+    return '<li class="r"><div class="num">0'+(i+1)+'</div><div class="txt">'+p[0]+'<span>'+p[1]+'</span></div></li>';
+  }).join("");
+
+  /* ---------- tooltip compartilhado ---------- */
+  function tipFor(host){
+    var t = host.querySelector(".tip");
+    if(!t){ t=document.createElement("div"); t.className="tip"; host.appendChild(t); }
+    return t;
+  }
+  function tipHtml(h, rows){
+    return '<div class="h">'+h+'</div>' + rows.map(function(r){return '<div class="row"><span>'+r[0]+'</span><span>'+r[1]+'</span></div>';}).join("");
+  }
+  function placeTip(t, host, x, y){
+    var w=t.offsetWidth, hw=host.clientWidth;
+    var left = x + 16; if(left + w > hw) left = x - w - 16; if(left<0) left=0;
+    t.style.left = left+"px"; t.style.top = Math.max(0, y - t.offsetHeight - 12)+"px";
+  }
+  function bindTip(host, items, html){
+    var t = tipFor(host);
+    items.forEach(function(el, i){
+      el.addEventListener("mouseenter", function(){ t.innerHTML = html(i); t.style.opacity=1; });
+      el.addEventListener("mousemove", function(e){ var r=host.getBoundingClientRect(); placeTip(t, host, e.clientX-r.left, e.clientY-r.top); });
+      el.addEventListener("mouseleave", function(){ t.style.opacity=0; });
+    });
+  }
+
+  /* ---------- linha: disponibilidade semanal ---------- */
+  var NS="http://www.w3.org/2000/svg";
+  function S(tag, a, parent){ var e=document.createElementNS(NS,tag); for(var k in a) e.setAttribute(k,a[k]); if(parent) parent.appendChild(e); return e; }
+
+  function lineChart(host, pts, meta){
+    host.querySelectorAll("svg").forEach(function(s){s.remove();});
+    var W=host.clientWidth, H=host.clientHeight; if(!W||!H||!pts.length) return;
+    var m={l:54,r:78,t:20,b:36};
+    var vals=pts.map(function(p){return p.v;});
+    var lo=Math.min.apply(null, vals.concat(meta?[meta]:[])), hi=Math.max.apply(null, vals.concat(meta?[meta]:[]));
+    lo=Math.max(0, Math.floor((lo-0.02)*20)/20); hi=Math.min(1, Math.ceil((hi+0.01)*20)/20);
+    if(hi-lo<0.1) lo=Math.max(0,hi-0.1);
+    var step=(hi-lo)>0.3?0.1:0.05;
+    var pw=W-m.l-m.r, ph=H-m.t-m.b;
+    function x(i){ return m.l + (pts.length===1?0.5:i/(pts.length-1))*pw; }
+    function y(v){ return m.t + (1-(v-lo)/(hi-lo))*ph; }
+    var s=S("svg",{width:W,height:H,viewBox:"0 0 "+W+" "+H});
+    for(var v=lo; v<=hi+1e-9; v+=step){
+      S("line",{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v),"class":"gl"},s);
+      S("text",{x:m.l-12,y:y(v)+4,"text-anchor":"end","class":"ax"},s).textContent=nf(v*100,0)+"%";
+    }
+    var nT=Math.min(pts.length, W<600?4:7);
+    for(var k=0;k<nT;k++){
+      var ii=nT===1?0:Math.round(k*(pts.length-1)/(nT-1));
+      S("text",{x:x(ii),y:H-10,"text-anchor":"middle","class":"ax"},s).textContent=pts[ii].label;
+    }
+    var last=pts.length-1, iMin=vals.indexOf(Math.min.apply(null,vals));
+    var perto = meta && Math.abs(y(pts[last].v)-y(meta))<20;
+    var acima = pts[last].v>=meta;
+    if(meta){
+      S("line",{x1:m.l,x2:W-m.r,y1:y(meta),y2:y(meta),"class":"goal"},s);
+      S("text",{x:W-m.r+10,y:y(meta)+(perto ? (acima?18:-8) : 4),"class":"goal-t"},s).textContent="Meta "+pct(meta,0);
+    }
+    var d="", a="";
+    pts.forEach(function(p,i){ d+=(i?"L":"M")+x(i).toFixed(1)+","+y(p.v).toFixed(1); });
+    a = d + "L"+x(pts.length-1).toFixed(1)+","+(m.t+ph)+"L"+x(0).toFixed(1)+","+(m.t+ph)+"Z";
+    S("path",{d:a,fill:"var(--orange)","fill-opacity":".10",stroke:"none"},s);
+    S("path",{d:d,fill:"none",stroke:"var(--orange)","stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"},s);
+
+    // rótulos seletivos: último ponto e mínimo
+    [[last,"end"],[iMin,"min"]].forEach(function(q, n){
+      if(n===1 && q[0]===last) return;
+      var i=q[0];
+      S("circle",{cx:x(i),cy:y(pts[i].v),r:4.5,fill:"var(--orange)",stroke:"var(--void)","stroke-width":2},s);
+      var tx = n===0 ? x(i)+10 : x(i), ty = n===0 ? y(pts[i].v)+4 : y(pts[i].v)+22;
+      var anchor = n===0 ? "start" : "middle";
+      if(n===0 && perto) ty = y(pts[i].v) + (acima?-8:18);
+      S("text",{x:tx,y:ty,"text-anchor":anchor,"class":"lbl"+(n?" m":"")},s).textContent=pct(pts[i].v);
+    });
+
+    // hover: crosshair + ponto + tooltip
+    var xh=S("line",{y1:m.t,y2:m.t+ph,"class":"xh"},s);
+    var hd=S("circle",{r:5,fill:"var(--orange)",stroke:"var(--void)","stroke-width":2,opacity:0},s);
+    var ov=S("rect",{x:m.l,y:m.t,width:pw,height:ph,fill:"transparent"},s);
+    host.insertBefore(s, host.firstChild);
+    var t=tipFor(host);
+    ov.addEventListener("mousemove",function(e){
+      var r=host.getBoundingClientRect(), mx=e.clientX-r.left;
+      var i=Math.max(0,Math.min(pts.length-1,Math.round((mx-m.l)/pw*(pts.length-1))));
+      var p=pts[i];
+      xh.setAttribute("x1",x(i)); xh.setAttribute("x2",x(i)); xh.style.opacity=.6;
+      hd.setAttribute("cx",x(i)); hd.setAttribute("cy",y(p.v)); hd.setAttribute("opacity",1);
+      t.innerHTML=p.tip; t.style.opacity=1; placeTip(t, host, x(i), y(p.v));
+    });
+    ov.addEventListener("mouseleave",function(){ xh.style.opacity=0; hd.setAttribute("opacity",0); t.style.opacity=0; });
+  }
+
+  /* ---------- barras horizontais ---------- */
+  function hbars(host, items, o){
+    if(!host || !items.length) return;
+    var max=Math.max.apply(null, items.map(function(it){return it.v;}));
+    host.innerHTML = items.map(function(it){
+      return '<div class="hb'+(it.mute?' mute':'')+'"><div class="lb" title="'+esc(it.label)+'">'+esc(it.label)+'</div>'+
+        '<div class="tr"><div class="bar" style="width:calc((100% - '+(o.room||170)+'px) * '+(it.v/max).toFixed(4)+')"></div>'+
+        '<div class="v">'+it.txt+'</div></div></div>';
+    }).join("");
+    bindTip(host, Array.prototype.slice.call(host.querySelectorAll(".hb")), function(i){ return items[i].tip; });
+  }
+
+  /* ---------- colunas ---------- */
+  function cols(host, items){
+    if(!host || !items.length) return;
+    var max=Math.max.apply(null, items.map(function(it){return it.v;}));
+    host.innerHTML = items.map(function(it){
+      return '<div class="col'+(it.mute?' mute':'')+'"><div class="v">'+it.txt+'</div>'+
+        '<div class="bar" style="height:calc((100% - 34px) * '+(it.v/max).toFixed(4)+')"></div>'+
+        '<div class="lb">'+esc(it.label)+'</div></div>';
+    }).join("");
+    bindTip(host, Array.prototype.slice.call(host.querySelectorAll(".col")), function(i){ return items[i].tip; });
+  }
+
+  /* ---------- montar gráficos ---------- */
+  var ptsSem = semanas.map(function(w){
+    return { v:w.disp, label:dm(w.inicio),
+      tip: tipHtml("Semana de "+dm(w.inicio), [["Disponibilidade",pct(w.disp)],["Horas paradas",nf(w.horas,0)+" h"],["Dias na semana",w.dias]]) };
+  });
+  function drawLine(){ lineChart(document.getElementById("chEvol"), ptsSem, D.meta); }
+
+  var mComParada = meses.filter(function(mm){return mm.paradas;});
+  function mesTip(mm){
+    return tipHtml(MESES_L[+mm.mes.slice(5)-1]+" "+mm.mes.slice(0,4)+(mm.parcial?" (parcial)":""),
+      [["Paradas",nf(mm.paradas)],["Por dia",nf(mm.paradas/mm.dias,1)],["Tempo médio",dur(mm.horas_eventos/mm.paradas)],["Disponibilidade",pct(mm.disp)]]);
+  }
+  cols(document.getElementById("chMesFreq"), mComParada.map(function(mm){
+    return { v:mm.paradas/mm.dias, label:mes(mm.mes)+(mm.parcial?"*":""), txt:nf(mm.paradas/mm.dias,1), mute:mm.parcial, tip:mesTip(mm) };
+  }));
+  cols(document.getElementById("chMesMttr"), mComParada.map(function(mm){
+    return { v:mm.horas_eventos/mm.paradas, label:mes(mm.mes)+(mm.parcial?"*":""), txt:dur(mm.horas_eventos/mm.paradas), mute:mm.parcial, tip:mesTip(mm) };
+  }));
+
+  var MAXMOT = 8, mShow = motivos.slice(0,MAXMOT), resto = motivos.slice(MAXMOT);
+  if(resto.length){
+    mShow.push({ nome:"Outros ("+resto.length+")", horas:sum(resto,function(m){return m.horas;}), paradas:sum(resto,function(m){return m.paradas;}), outros:true });
+  }
+  hbars(document.getElementById("chMotivos"), mShow.map(function(mo, i){
+    return { label:mo.nome, v:mo.horas, mute: mo.outros || i>=n80,
+      txt: nf(mo.horas,0)+" h <em>· "+pct(mo.horas/totH,0)+"</em>",
+      tip: tipHtml(esc(mo.nome), [["Horas paradas",nf(mo.horas,0)+" h"],["% do total",pct(mo.horas/totH)],["Paradas",nf(mo.paradas)],["Tempo médio",dur(mo.horas/mo.paradas)]]) };
+  }), {room:150});
+
+  cols(document.getElementById("chDur"), (D.duracao||[]).map(function(b){
+    return { v:b.paradas, label:b.faixa, txt:nf(b.paradas), mute:!b.longa,
+      tip: tipHtml("Paradas de "+esc(b.faixa), [["Paradas",nf(b.paradas)+" ("+pct(b.paradas/totP,0)+")"],["Horas paradas",nf(b.horas,0)+" h ("+pct(b.horas/totH,0)+")"]]) };
+  }));
+  hbars(document.getElementById("chMttrMot"), mttrMot.slice(0,7).map(function(mo, i){
+    return { label:mo.nome, v:mo.v, mute:i>=3, txt:dur(mo.v),
+      tip: tipHtml(esc(mo.nome), [["Tempo médio",dur(mo.v)],["Paradas",nf(mo.paradas)],["Horas paradas",nf(mo.horas,0)+" h"]]) };
+  }), {room:80});
+
+  var maxF = top10.length ? top10[0].horas : 1;
+  var tb = document.querySelector("#tbFrotas tbody");
+  tb.innerHTML = top10.map(function(f,i){
+    return '<tr class="'+(i>=3?'mute':'')+'"><td class="pos">'+String(i+1).padStart(2,"0")+'</td>'+
+      '<td class="f">'+esc(f.frota)+(f.descricao?' <span style="color:var(--ink-3);font-weight:400">· '+esc(f.descricao)+'</span>':'')+'</td>'+
+      '<td><div class="ib"><i style="width:calc(min(22vw,240px) * '+(f.horas/maxF).toFixed(4)+')"></i><span>'+nf(f.horas,0)+' h</span></div></td>'+
+      '<td class="num">'+nf(f.paradas)+'</td><td class="num">'+pct(f.disp)+'</td>'+
+      '<td class="mot hide-sm" title="'+esc(f.motivo||"")+'">'+esc(f.motivo||"—")+'</td></tr>';
+  }).join("");
+
+  if(locais.length){
+    var mxL = locais.slice().sort(function(a,b){return b.horas/b.paradas - a.horas/a.paradas;});
+    hbars(document.getElementById("chLocalH"), locais.map(function(l){
+      return { label:l.nome, v:l.horas, mute:!/extern/i.test(l.nome), txt:nf(l.horas,0)+" h <em>· "+pct(l.horas/totH,0)+"</em>",
+        tip: tipHtml(esc(l.nome), [["Horas paradas",nf(l.horas,0)+" h"],["% do total",pct(l.horas/totH)],["OS",nf(l.paradas)],["Tempo médio",dur(l.horas/l.paradas)]]) };
+    }), {room:150});
+    hbars(document.getElementById("chLocalM"), mxL.map(function(l){
+      return { label:l.nome, v:l.horas/l.paradas, mute:!/extern/i.test(l.nome), txt:dur(l.horas/l.paradas),
+        tip: tipHtml(esc(l.nome), [["Tempo médio",dur(l.horas/l.paradas)],["OS",nf(l.paradas)]]) };
+    }), {room:90});
+  }
+  document.querySelector("#tbAbertas tbody").innerHTML = (AB.lista||[]).map(function(a,i){
+    return '<tr class="'+(i>=3?'mute':'')+'"><td class="f">'+esc(a.frota)+'</td><td class="hide-sm">'+esc(a.descricao||"")+'</td>'+
+      '<td class="num">'+dmy(a.desde)+'</td><td class="num">'+nf(a.dias)+'</td>'+
+      '<td class="mot" title="'+esc(a.problema||"")+'">'+esc(a.motivo)+'</td><td class="hide-sm">'+esc(a.local||"")+'</td></tr>';
+  }).join("");
+
+  window.__drawCharts = drawLine;
+  window.addEventListener("resize", drawLine);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(drawLine);
+  drawLine();
+})();
+</script>
+
+<script>
+(function(){
+  /* ============ campo de partículas ============ */
+  var cv = document.getElementById("field"), ctx = cv.getContext("2d");
+  var W=0,H=0,DPR=1,parts=[],mx=0,my=0,tx=0,ty=0;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var ACC = { orange:[255,115,14], cream:[242,225,194], invert:[65,61,108] };
+  var cur = [255,115,14], tgt = [255,115,14];
+
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio||1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = Math.floor(W*DPR); cv.height = Math.floor(H*DPR);
+    cv.style.width = W+"px"; cv.style.height = H+"px";
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    build();
+  }
+  function build(){
+    var n = Math.min(150, Math.max(50, Math.round(W*H/13000)));
+    parts = [];
+    for(var i=0;i<n;i++){
+      parts.push({ x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-.5)*0.19, vy:(Math.random()-.5)*0.19,
+        r:Math.random()*1.7+0.5, a:Math.random()*0.42+0.16, ph:Math.random()*Math.PI*2, sp:Math.random()*0.9+0.35, big:Math.random()<0.07 });
+    }
+  }
+  function draw(t){
+    for(var k=0;k<3;k++) cur[k] += (tgt[k]-cur[k])*0.045;
+    var R=Math.round(cur[0]), G=Math.round(cur[1]), B=Math.round(cur[2]);
+    tx += (mx-tx)*0.045; ty += (my-ty)*0.045;
+    ctx.clearRect(0,0,W,H);
+    var i,p,q,j,dx,dy,d2;
+    ctx.lineWidth = 1;
+    for(i=0;i<parts.length;i++){
+      p=parts[i];
+      for(j=i+1;j<parts.length;j++){
+        q=parts[j]; dx=p.x-q.x; dy=p.y-q.y; d2=dx*dx+dy*dy;
+        if(d2 < 18000){
+          ctx.strokeStyle = "rgba("+R+","+G+","+B+","+((1 - d2/18000) * 0.14).toFixed(3)+")";
+          ctx.beginPath(); ctx.moveTo(p.x+tx*p.r*0.5, p.y+ty*p.r*0.5); ctx.lineTo(q.x+tx*q.r*0.5, q.y+ty*q.r*0.5); ctx.stroke();
+        }
+      }
+    }
+    for(i=0;i<parts.length;i++){
+      p=parts[i];
+      if(!reduce){
+        p.x += p.vx; p.y += p.vy; p.y += Math.sin((t/2600)*p.sp + p.ph)*0.09;
+        if(p.x < -20) p.x = W+20; if(p.x > W+20) p.x = -20;
+        if(p.y < -20) p.y = H+20; if(p.y > H+20) p.y = -20;
+      }
+      var tw = 0.72 + 0.28*Math.sin(t/1500*p.sp + p.ph);
+      var px = p.x + tx*p.r*0.8, py = p.y + ty*p.r*0.8;
+      if(p.big){
+        var g = ctx.createRadialGradient(px,py,0,px,py,p.r*11);
+        g.addColorStop(0,"rgba("+R+","+G+","+B+","+(p.a*0.5*tw).toFixed(3)+")");
+        g.addColorStop(1,"rgba("+R+","+G+","+B+",0)");
+        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(px,py,p.r*11,0,6.2832); ctx.fill();
+      }
+      ctx.fillStyle = "rgba("+R+","+G+","+B+","+(p.a*tw).toFixed(3)+")";
+      ctx.beginPath(); ctx.arc(px,py,p.r,0,6.2832); ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener("resize", resize);
+  window.addEventListener("mousemove", function(e){
+    mx = (e.clientX/window.innerWidth - .5) * 22;
+    my = (e.clientY/window.innerHeight - .5) * 22;
+  });
+  resize();
+  requestAnimationFrame(draw);
+
+  /* ============ navegação ============ */
+  var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+  var idx = 0;
+  var lblB=document.getElementById("lblBlock"), lblS=document.getElementById("lblSec"),
+      lblN=document.getElementById("lblNum"), bar=document.getElementById("bar");
+  document.getElementById("lblTot").textContent = String(slides.length).padStart(2,"0");
+
+  slides.forEach(function(s){
+    var rs = s.querySelectorAll(".r");
+    for(var i=0;i<rs.length;i++) rs[i].style.setProperty("--d", (i*80)+"ms");
+  });
+
+  function show(n){
+    n = Math.max(0, Math.min(slides.length-1, n));
+    if(n===idx && slides[n].classList.contains("is-active")) return;
+    idx = n;
+    slides.forEach(function(s,i){ s.classList.toggle("is-active", i===idx); });
+    var s = slides[idx];
+    var acc = s.getAttribute("data-accent") || "orange";
+    document.documentElement.setAttribute("data-accent", acc);
+    tgt = ACC[acc] || ACC.orange;
+    lblB.textContent = s.getAttribute("data-block");
+    lblS.textContent = s.getAttribute("data-sec");
+    lblN.textContent = String(idx+1).padStart(2,"0");
+    bar.style.width = ((idx+1)/slides.length*100).toFixed(2)+"%";
+    if(window.__drawCharts) window.__drawCharts();
+    try{ history.replaceState(null, "", "#" + (idx+1)); }catch(e){}
+  }
+  function next(){ show(idx+1); }
+  function prev(){ show(idx-1); }
+
+  document.addEventListener("keydown", function(e){
+    var k = e.key;
+    if(k==="ArrowRight"||k==="ArrowDown"||k===" "||k==="PageDown"||k==="Enter"){ e.preventDefault(); next(); }
+    else if(k==="ArrowLeft"||k==="ArrowUp"||k==="PageUp"||k==="Backspace"){ e.preventDefault(); prev(); }
+    else if(k==="Home"){ e.preventDefault(); show(0); }
+    else if(k==="End"){ e.preventDefault(); show(slides.length-1); }
+    else if(k==="f"||k==="F"){ e.preventDefault(); toggleFull(); }
+  });
+  document.getElementById("btnNext").addEventListener("click", function(e){ e.stopPropagation(); next(); });
+  document.getElementById("btnPrev").addEventListener("click", function(e){ e.stopPropagation(); prev(); });
+  document.getElementById("btnFull").addEventListener("click", function(e){ e.stopPropagation(); toggleFull(); });
+  function toggleFull(){
+    try{
+      if(!document.fullscreenElement){ document.documentElement.requestFullscreen(); }
+      else { document.exitFullscreen(); }
+    }catch(e){}
+  }
+  document.addEventListener("click", function(e){
+    if(e.target.closest("button, .chart, .hbars, .cols, table")) return;
+    next();
+  });
+  var sx=null;
+  document.addEventListener("touchstart", function(e){ sx = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener("touchend", function(e){
+    if(sx===null) return;
+    var dx = e.changedTouches[0].clientX - sx;
+    if(Math.abs(dx) > 45){ dx < 0 ? next() : prev(); }
+    sx = null;
+  }, {passive:true});
+
+  var start = parseInt((location.hash||"").slice(1),10);
+  idx = -1;
+  show(isNaN(start) ? 0 : start-1);
+})();
+</script>
+</body>
+</html>
