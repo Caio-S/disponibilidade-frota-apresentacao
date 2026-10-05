@@ -228,6 +228,9 @@
   .rank tr.mute .ib i{background:var(--mute-bar)}
   .rank .ib span{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;color:var(--ink)}
   @media (max-width:760px){ .rank .hide-sm{display:none} .rank{font-size:13px} .rank td,.rank th{padding-left:6px;padding-right:6px} }
+  table.rank.compact{font-size:min(1.5vw,1.95vh,17px);margin-top:min(2.6vh,24px)}
+  .rank.compact td{padding:min(0.55vh,6px) 12px}
+  .rank.compact .ib i{height:min(1.3vh,12px)}
 
   .note{font-size:min(1.5vw,2vh,15px);color:var(--ink-3);margin-top:min(2.4vh,20px)}
 
@@ -1548,7 +1551,7 @@
     <div class="inner">
       <div class="kicker r">Disponibilidade por especialidade</div>
       <h3 class="r" data-t="esp_titulo"></h3>
-      <table class="rank r" id="tbEsp">
+      <table class="rank compact r" id="tbEsp">
         <thead><tr>
           <th>Especialidade</th><th class="num">Caminhões</th><th>Disponibilidade</th><th class="num hide-sm">Paradas</th><th class="num">Horas paradas</th><th class="hide-sm">Motivo principal</th>
         </tr></thead>
@@ -1905,7 +1908,9 @@
     (AB.mais_30d ? " — " + nf(AB.mais_30d) + " parados há mais de 30 dias." : ".");
 
   // por especialidade
-  var ESP = (D.especialidades || []).filter(function(e){ return e.disp != null; });
+  // grupo sem especialidade e sem nenhuma OS: fica fora da tabela (os caminhões contam na média da frota)
+  var semEsp = (D.especialidades || []).filter(function(e){ return e.nome === "Não informado" && !e.paradas; });
+  var ESP = (D.especialidades || []).filter(function(e){ return e.disp != null && semEsp.indexOf(e) < 0; });
   if(!ESP.length || (ESP.length === 1 && ESP[0].nome === "Não informado")){
     document.querySelectorAll(".slide.esp").forEach(function(sl){ sl.remove(); });
   } else {
@@ -1915,7 +1920,8 @@
     T.esp_titulo = esc(maior.nome) + " (" + nf(maior.caminhoes) + " caminhões): " + pct(maior.disp) + "." +
       (piorE && piorE !== maior ? " Menor disponibilidade: " + esc(piorE.nome.toLowerCase()) + ", " + pct(piorE.disp) + "." : "");
     T.esp_nota = "Em laranja, especialidades abaixo da média da frota (" + pct(D.disp_media) + "). " +
-      "Especialidade do cadastro de abastecimento; sem ela, a aplicação mais frequente nas OS. Grupos com 1–2 caminhões oscilam muito.";
+      "Especialidade do cadastro de abastecimento; sem ela, a aplicação mais frequente nas OS. Grupos com 1–2 caminhões oscilam muito." +
+      (semEsp.length ? " " + nf(semEsp[0].caminhoes) + " caminhões sem especialidade nem OS no período ficam fora da tabela." : "");
   }
 
   // seção em foco (ex.: quinta roda)
