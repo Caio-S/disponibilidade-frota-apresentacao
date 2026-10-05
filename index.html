@@ -266,18 +266,139 @@
 -->
 <script id="dados" type="application/json">{
  "escopo": "caminhões próprios",
- "aviso": "O banco só tem ordens de serviço a partir de 15/08/2026 — de 07/04 a 14/08 não há registro nesta fonte.",
+ "aviso": "Sem dados de 08/05 a 14/08 — período ainda não importado do CHB.",
+ "lacunas": [
+  {
+   "de": "2026-05-08",
+   "ate": "2026-08-14",
+   "dias": 99
+  }
+ ],
  "foco": {
   "nome": "Quinta roda",
-  "os": 147,
-  "os_parado": 128,
-  "caminhoes": 46,
+  "os": 221,
+  "os_parado": 201,
+  "caminhoes": 53,
   "base": 61,
-  "horas": 1258.5,
-  "mediana_h": 3.24,
-  "pct_paradas": 0.0636,
-  "reincidentes_3": 21,
+  "horas": 2226.7,
+  "mediana_h": 4.65,
+  "pct_paradas": 0.0608,
+  "reincidentes_3": 35,
   "semanas": [
+   {
+    "inicio": "2026-04-07",
+    "dias": 6,
+    "os": 16,
+    "parado": 16
+   },
+   {
+    "inicio": "2026-04-13",
+    "dias": 7,
+    "os": 8,
+    "parado": 8
+   },
+   {
+    "inicio": "2026-04-20",
+    "dias": 7,
+    "os": 15,
+    "parado": 15
+   },
+   {
+    "inicio": "2026-04-27",
+    "dias": 7,
+    "os": 22,
+    "parado": 22
+   },
+   {
+    "inicio": "2026-05-04",
+    "dias": 4,
+    "os": 7,
+    "parado": 7
+   },
+   {
+    "inicio": "2026-05-11",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-05-18",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-05-25",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-06-01",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-06-08",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-06-15",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-06-22",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-06-29",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-07-06",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-07-13",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-07-20",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-07-27",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-08-03",
+    "dias": 0,
+    "os": 0,
+    "parado": 0
+   },
+   {
+    "inicio": "2026-08-10",
+    "dias": 2,
+    "os": 6,
+    "parado": 5
+   },
    {
     "inicio": "2026-08-17",
     "dias": 7,
@@ -324,79 +445,93 @@
   "tipos": [
    {
     "nome": "Verificar / regular",
-    "os": 41,
-    "horas": 272.5
-   },
-   {
-    "nome": "Troca da peça",
-    "os": 25,
-    "horas": 277.0
+    "os": 67,
+    "horas": 453.1
    },
    {
     "nome": "Não engata / não trava",
-    "os": 24,
-    "horas": 330.5
+    "os": 40,
+    "horas": 490.4
+   },
+   {
+    "nome": "Troca da peça",
+    "os": 33,
+    "horas": 400.7
    },
    {
     "nome": "Lubrificação / limpeza",
-    "os": 21,
-    "horas": 66.8
-   },
-   {
-    "nome": "Quebra / trinca",
-    "os": 17,
-    "horas": 137.0
+    "os": 30,
+    "horas": 141.3
    },
    {
     "nome": "Parafusos / folga",
-    "os": 12,
-    "horas": 41.5
+    "os": 20,
+    "horas": 101.8
+   },
+   {
+    "nome": "Quebra / trinca",
+    "os": 20,
+    "horas": 474.8
    },
    {
     "nome": "Outros",
-    "os": 7,
-    "horas": 133.1
+    "os": 11,
+    "horas": 164.5
    }
   ],
   "locais": [
    {
     "nome": "Interna",
-    "os": 117,
-    "horas": 1202.2
+    "os": 185,
+    "horas": 1825.5
    },
    {
     "nome": "No campo",
-    "os": 11,
-    "horas": 56.3
+    "os": 15,
+    "horas": 111.6
+   },
+   {
+    "nome": "Externa",
+    "os": 1,
+    "horas": 289.6
    }
   ],
   "modelos": [
    {
     "nome": "VOLVO FM",
-    "os": 81,
-    "afetados": 23,
+    "os": 110,
+    "afetados": 26,
     "frota": 29
    },
    {
     "nome": "VOLVO FMX",
-    "os": 46,
-    "afetados": 17,
+    "os": 76,
+    "afetados": 21,
     "frota": 21
    },
    {
     "nome": "VOLVO FH",
-    "os": 20,
+    "os": 35,
     "afetados": 6,
     "frota": 11
    }
   ],
   "reincidentes": [
    {
+    "frota": "60525",
+    "descricao": "VOLVO FH 540",
+    "os": 12,
+    "parado": 12,
+    "horas": 46.3,
+    "ultima": "2026-09-28",
+    "tipo": "Troca da peça"
+   },
+   {
     "frota": "60515",
     "descricao": "VOLVO FMX 540",
-    "os": 9,
-    "parado": 8,
-    "horas": 339.6,
+    "os": 11,
+    "parado": 10,
+    "horas": 350.7,
     "ultima": "2026-10-03",
     "tipo": "Verificar / regular"
    },
@@ -419,93 +554,84 @@
     "tipo": "Não engata / não trava"
    },
    {
-    "frota": "60525",
-    "descricao": "VOLVO FH 540",
-    "os": 8,
-    "parado": 8,
-    "horas": 24.0,
-    "ultima": "2026-09-28",
-    "tipo": "Não engata / não trava"
-   },
-   {
     "frota": "60547",
     "descricao": "VOLVO FM 540",
-    "os": 7,
-    "parado": 5,
-    "horas": 43.6,
+    "os": 8,
+    "parado": 6,
+    "horas": 48.5,
     "ultima": "2026-09-27",
     "tipo": "Lubrificação / limpeza"
+   },
+   {
+    "frota": "60526",
+    "descricao": "VOLVO FH 540",
+    "os": 8,
+    "parado": 7,
+    "horas": 40.7,
+    "ultima": "2026-09-16",
+    "tipo": "Verificar / regular"
    },
    {
     "frota": "60529",
     "descricao": "VOLVO FM 540",
-    "os": 6,
-    "parado": 5,
-    "horas": 29.8,
+    "os": 8,
+    "parado": 6,
+    "horas": 30.8,
     "ultima": "2026-10-02",
     "tipo": "Verificar / regular"
    },
    {
-    "frota": "60535",
+    "frota": "60545",
     "descricao": "VOLVO FM 540",
-    "os": 6,
-    "parado": 5,
-    "horas": 3.8,
-    "ultima": "2026-10-02",
-    "tipo": "Verificar / regular"
+    "os": 7,
+    "parado": 6,
+    "horas": 41.9,
+    "ultima": "2026-09-26",
+    "tipo": "Troca da peça"
    },
    {
-    "frota": "60527",
-    "descricao": "VOLVO FM 540",
-    "os": 5,
-    "parado": 5,
-    "horas": 38.4,
-    "ultima": "2026-10-02",
-    "tipo": "Lubrificação / limpeza"
+    "frota": "60536",
+    "descricao": "VOLVO FH 540",
+    "os": 6,
+    "parado": 6,
+    "horas": 62.6,
+    "ultima": "2026-10-04",
+    "tipo": "Troca da peça"
    },
    {
     "frota": "60537",
     "descricao": "VOLVO FM 540",
-    "os": 5,
-    "parado": 5,
-    "horas": 19.2,
+    "os": 6,
+    "parado": 6,
+    "horas": 25.4,
     "ultima": "2026-09-28",
     "tipo": "Não engata / não trava"
-   },
-   {
-    "frota": "60534",
-    "descricao": "VOLVO FM 540",
-    "os": 5,
-    "parado": 4,
-    "horas": 17.4,
-    "ultima": "2026-09-27",
-    "tipo": "Verificar / regular"
    }
   ],
   "exemplos": [
    {
     "texto": "Verificar quinta roda",
-    "os": 14
-   },
-   {
-    "texto": "Trocar quinta roda",
-    "os": 10
+    "os": 16
    },
    {
     "texto": "Regular quinta roda",
-    "os": 8
+    "os": 13
+   },
+   {
+    "texto": "Trocar quinta roda",
+    "os": 11
+   },
+   {
+    "texto": "Problema na quinta roda",
+    "os": 7
+   },
+   {
+    "texto": "Quinta roda",
+    "os": 7
    },
    {
     "texto": "Lubrificar quinta roda",
     "os": 7
-   },
-   {
-    "texto": "Problema na quinta roda",
-    "os": 6
-   },
-   {
-    "texto": "Quinta roda",
-    "os": 6
    }
   ]
  },
@@ -513,40 +639,40 @@
  "locais": [
   {
    "nome": "Interna",
-   "horas": 21375.0,
-   "paradas": 1699
+   "horas": 34072.5,
+   "paradas": 2838
   },
   {
    "nome": "Externa",
-   "horas": 15145.1,
-   "paradas": 36
+   "horas": 19613.7,
+   "paradas": 47
   },
   {
    "nome": "No campo",
-   "horas": 2651.7,
-   "paradas": 276
+   "horas": 3947.0,
+   "paradas": 420
   }
  ],
  "manutencoes": [
   {
    "nome": "Corretiva",
-   "horas": 29342.5,
-   "paradas": 1734
-  },
-  {
-   "nome": "Reforma",
-   "horas": 5059.3,
-   "paradas": 5
+   "horas": 43397.6,
+   "paradas": 2691
   },
   {
    "nome": "Preventiva",
-   "horas": 4770.0,
-   "paradas": 272
+   "horas": 7635.9,
+   "paradas": 609
+  },
+  {
+   "nome": "Reforma",
+   "horas": 6599.6,
+   "paradas": 5
   }
  ],
  "abertas": {
-  "caminhoes": 33,
-  "os": 33,
+  "caminhoes": 31,
+  "os": 31,
   "mais_30d": 8,
   "lista": [
    {
@@ -642,18 +768,132 @@
   ]
  },
  "fonte": "syscustoWeb · ordens de serviço e cadastro de frota",
- "inicio": "2026-08-17",
+ "inicio": "2026-04-07",
  "fim": "2026-10-04",
- "dias": 49,
+ "dias": 82,
  "frota_total": 106,
  "frotas_com_parada": 103,
  "meta": null,
- "disp_media": 0.6858,
- "horas_paradas": 39171.7,
- "paradas": 2011,
- "mediana_h": 3.4,
+ "disp_media": 0.7237,
+ "horas_paradas": 57633.2,
+ "paradas": 3305,
+ "mediana_h": 3.72,
  "corte_longa": "3 dias",
  "semanas": [
+  {
+   "inicio": "2026-04-07",
+   "dias": 6,
+   "horas": 2707.0,
+   "disp": 0.8227
+  },
+  {
+   "inicio": "2026-04-13",
+   "dias": 7,
+   "horas": 3604.2,
+   "disp": 0.7976
+  },
+  {
+   "inicio": "2026-04-20",
+   "dias": 7,
+   "horas": 3861.9,
+   "disp": 0.7831
+  },
+  {
+   "inicio": "2026-04-27",
+   "dias": 7,
+   "horas": 4271.8,
+   "disp": 0.7601
+  },
+  {
+   "inicio": "2026-05-04",
+   "dias": 4,
+   "horas": 2703.3,
+   "disp": 0.7343
+  },
+  {
+   "inicio": "2026-05-11",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-05-18",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-05-25",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-06-01",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-06-08",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-06-15",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-06-22",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-06-29",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-07-06",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-07-13",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-07-20",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-07-27",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-08-03",
+   "dias": 0,
+   "horas": 0,
+   "disp": null
+  },
+  {
+   "inicio": "2026-08-15",
+   "dias": 2,
+   "horas": 1313.3,
+   "disp": 0.7419
+  },
   {
    "inicio": "2026-08-17",
    "dias": 7,
@@ -699,13 +939,31 @@
  ],
  "meses": [
   {
-   "mes": "2026-08",
-   "dias": 15,
+   "mes": "2026-04",
+   "dias": 24,
    "parcial": true,
-   "horas": 11066.8,
-   "paradas": 655,
-   "horas_eventos": 19860.7,
-   "disp": 0.71
+   "horas": 12643.7,
+   "paradas": 924,
+   "horas_eventos": 17206.4,
+   "disp": 0.7929
+  },
+  {
+   "mes": "2026-05",
+   "dias": 7,
+   "parcial": true,
+   "horas": 4504.5,
+   "paradas": 289,
+   "horas_eventos": 2793.1,
+   "disp": 0.7471
+  },
+  {
+   "mes": "2026-08",
+   "dias": 17,
+   "parcial": true,
+   "horas": 12380.1,
+   "paradas": 715,
+   "horas_eventos": 10886.4,
+   "disp": 0.7137
   },
   {
    "mes": "2026-09",
@@ -729,139 +987,123 @@
  "motivos": [
   {
    "nome": "Motor / arrefecimento",
-   "horas": 10664.0,
-   "paradas": 322
-  },
-  {
-   "nome": "Reforma",
-   "horas": 5059.3,
-   "paradas": 5
+   "horas": 15025.7,
+   "paradas": 508
   },
   {
    "nome": "Preventiva",
-   "horas": 4770.0,
-   "paradas": 272
+   "horas": 7635.9,
+   "paradas": 609
   },
   {
    "nome": "Elétrica",
-   "horas": 4144.3,
-   "paradas": 403
+   "horas": 6936.4,
+   "paradas": 644
+  },
+  {
+   "nome": "Reforma",
+   "horas": 6599.6,
+   "paradas": 5
   },
   {
    "nome": "Câmbio / transmissão",
-   "horas": 2994.6,
-   "paradas": 74
+   "horas": 4766.1,
+   "paradas": 129
   },
   {
    "nome": "Freios / ar comprimido",
-   "horas": 2389.8,
-   "paradas": 216
+   "horas": 3521.7,
+   "paradas": 317
   },
   {
    "nome": "Pneus / rodas",
-   "horas": 1860.6,
-   "paradas": 241
-  },
-  {
-   "nome": "Sinistro / acidente",
-   "horas": 1541.8,
-   "paradas": 3
+   "horas": 2767.0,
+   "paradas": 371
   },
   {
    "nome": "Ar-condicionado / cabine",
-   "horas": 1252.3,
-   "paradas": 104
+   "horas": 2114.2,
+   "paradas": 151
+  },
+  {
+   "nome": "Sinistro / acidente",
+   "horas": 1662.4,
+   "paradas": 5
   },
   {
    "nome": "Suspensão / direção",
-   "horas": 1181.3,
-   "paradas": 45
+   "horas": 1506.3,
+   "paradas": 69
   },
   {
    "nome": "Hidráulico / implemento",
-   "horas": 1098.7,
-   "paradas": 82
+   "horas": 1500.7,
+   "paradas": 125
   },
   {
    "nome": "Estrutura / solda",
-   "horas": 843.9,
-   "paradas": 49
+   "horas": 1323.0,
+   "paradas": 83
   },
   {
    "nome": "Quinta roda / engate",
-   "horas": 802.9,
-   "paradas": 87
+   "horas": 1139.7,
+   "paradas": 125
   },
   {
    "nome": "Outros",
-   "horas": 460.1,
-   "paradas": 99
+   "horas": 989.6,
+   "paradas": 150
   },
   {
    "nome": "Lavagem / pit stop",
-   "horas": 108.2,
-   "paradas": 9
+   "horas": 144.7,
+   "paradas": 14
   }
  ],
  "duracao": [
   {
    "faixa": "até 2 h",
-   "paradas": 761,
-   "horas": 687.7,
+   "paradas": 1171,
+   "horas": 1085.5,
    "longa": false
   },
   {
    "faixa": "2–8 h",
-   "paradas": 600,
-   "horas": 2515.2,
+   "paradas": 1040,
+   "horas": 4452.3,
    "longa": false
   },
   {
    "faixa": "8–24 h",
-   "paradas": 365,
-   "horas": 4929.1,
+   "paradas": 652,
+   "horas": 8875.9,
    "longa": false
   },
   {
    "faixa": "1–3 dias",
-   "paradas": 188,
-   "horas": 7106.6,
+   "paradas": 307,
+   "horas": 11277.8,
    "longa": false
   },
   {
    "faixa": "3–7 dias",
-   "paradas": 59,
-   "horas": 5846.3,
+   "paradas": 84,
+   "horas": 8371.1,
    "longa": true
   },
   {
    "faixa": "+7 dias",
-   "paradas": 38,
-   "horas": 18086.8,
+   "paradas": 51,
+   "horas": 23570.6,
    "longa": true
   }
  ],
  "frotas": [
   {
-   "frota": "60518",
-   "descricao": "VOLVO FMX 540",
-   "horas": 1176.0,
-   "paradas": 1,
-   "disp": 0.0,
-   "motivo": "Motor / arrefecimento"
-  },
-  {
-   "frota": "60546",
-   "descricao": "VOLVO FM 540",
-   "horas": 1176.0,
-   "paradas": 1,
-   "disp": 0.0,
-   "motivo": "Sinistro / acidente"
-  },
-  {
-   "frota": "60805",
-   "descricao": "VW 8120",
-   "horas": 1176.0,
+   "frota": "60811",
+   "descricao": "VW 9180",
+   "horas": 1968.0,
    "paradas": 1,
    "disp": 0.0,
    "motivo": "Reforma"
@@ -869,218 +1111,234 @@
   {
    "frota": "60809",
    "descricao": "M.BENZ 2729",
-   "horas": 1176.0,
-   "paradas": 1,
-   "disp": 0.0,
+   "horas": 1795.2,
+   "paradas": 2,
+   "disp": 0.0878,
    "motivo": "Motor / arrefecimento"
   },
   {
-   "frota": "60811",
-   "descricao": "VW 9180",
-   "horas": 1176.0,
-   "paradas": 1,
-   "disp": 0.0,
-   "motivo": "Reforma"
+   "frota": "61252",
+   "descricao": "VOLVO VM 330",
+   "horas": 1510.0,
+   "paradas": 20,
+   "disp": 0.2327,
+   "motivo": "Motor / arrefecimento"
   },
   {
    "frota": "60903",
    "descricao": "VOLVO FH 520",
-   "horas": 1176.0,
-   "paradas": 1,
-   "disp": 0.0,
+   "horas": 1471.6,
+   "paradas": 13,
+   "disp": 0.2522,
    "motivo": "Reforma"
   },
   {
-   "frota": "60914",
-   "descricao": "VOLVO VM 270",
-   "horas": 1176.0,
-   "paradas": 1,
-   "disp": 0.0,
+   "frota": "60805",
+   "descricao": "VW 8120",
+   "horas": 1398.1,
+   "paradas": 8,
+   "disp": 0.2896,
    "motivo": "Reforma"
   },
   {
    "frota": "60904",
    "descricao": "VOLVO FH 520",
-   "horas": 1146.0,
-   "paradas": 2,
-   "disp": 0.0255,
+   "horas": 1354.3,
+   "paradas": 15,
+   "disp": 0.3118,
    "motivo": "Câmbio / transmissão"
   },
   {
-   "frota": "61252",
-   "descricao": "VOLVO VM 330",
-   "horas": 1117.6,
-   "paradas": 2,
-   "disp": 0.0497,
+   "frota": "60914",
+   "descricao": "VOLVO VM 270",
+   "horas": 1309.4,
+   "paradas": 9,
+   "disp": 0.3347,
+   "motivo": "Reforma"
+  },
+  {
+   "frota": "60518",
+   "descricao": "VOLVO FMX 540",
+   "horas": 1294.1,
+   "paradas": 11,
+   "disp": 0.3424,
    "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60546",
+   "descricao": "VOLVO FM 540",
+   "horas": 1263.0,
+   "paradas": 14,
+   "disp": 0.3582,
+   "motivo": "Sinistro / acidente"
   },
   {
    "frota": "60520",
    "descricao": "VOLVO FMX 540",
-   "horas": 932.7,
-   "paradas": 17,
-   "disp": 0.2069,
+   "horas": 1208.2,
+   "paradas": 42,
+   "disp": 0.3861,
    "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60533",
+   "descricao": "VOLVO FM 540",
+   "horas": 1179.2,
+   "paradas": 46,
+   "disp": 0.4008,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60530",
+   "descricao": "VOLVO FM 540",
+   "horas": 1150.3,
+   "paradas": 15,
+   "disp": 0.4155,
+   "motivo": "Reforma"
+  },
+  {
+   "frota": "61250",
+   "descricao": "VOLVO VM 330",
+   "horas": 1101.9,
+   "paradas": 49,
+   "disp": 0.4401,
+   "motivo": "Elétrica"
   },
   {
    "frota": "60500",
    "descricao": "VOLVO FMX 540",
-   "horas": 766.8,
-   "paradas": 27,
-   "disp": 0.348,
+   "horas": 989.3,
+   "paradas": 42,
+   "disp": 0.4973,
    "motivo": "Preventiva"
+  },
+  {
+   "frota": "60534",
+   "descricao": "VOLVO FM 540",
+   "horas": 908.8,
+   "paradas": 36,
+   "disp": 0.5382,
+   "motivo": "Câmbio / transmissão"
+  },
+  {
+   "frota": "60505",
+   "descricao": "VOLVO FMX 540",
+   "horas": 859.6,
+   "paradas": 36,
+   "disp": 0.5632,
+   "motivo": "Freios / ar comprimido"
+  },
+  {
+   "frota": "61251",
+   "descricao": "VOLVO VM 330",
+   "horas": 841.2,
+   "paradas": 19,
+   "disp": 0.5726,
+   "motivo": "Freios / ar comprimido"
+  },
+  {
+   "frota": "60552",
+   "descricao": "VOLVO FM 540",
+   "horas": 834.7,
+   "paradas": 33,
+   "disp": 0.5759,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "61151",
+   "descricao": "VOLVO VM 270",
+   "horas": 810.0,
+   "paradas": 18,
+   "disp": 0.5884,
+   "motivo": "Câmbio / transmissão"
+  },
+  {
+   "frota": "60516",
+   "descricao": "VOLVO FM 540",
+   "horas": 796.4,
+   "paradas": 42,
+   "disp": 0.5953,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "61002",
+   "descricao": "MUNCK VW 11180",
+   "horas": 775.9,
+   "paradas": 14,
+   "disp": 0.6058,
+   "motivo": "Suspensão / direção"
+  },
+  {
+   "frota": "60512",
+   "descricao": "VOLVO FMX 540",
+   "horas": 775.1,
+   "paradas": 20,
+   "disp": 0.6062,
+   "motivo": "Elétrica"
+  },
+  {
+   "frota": "60507",
+   "descricao": "VOLVO FMX 540",
+   "horas": 769.8,
+   "paradas": 38,
+   "disp": 0.6088,
+   "motivo": "Elétrica"
+  },
+  {
+   "frota": "60536",
+   "descricao": "VOLVO FH 540",
+   "horas": 740.4,
+   "paradas": 55,
+   "disp": 0.6238,
+   "motivo": "Motor / arrefecimento"
   },
   {
    "frota": "60522",
    "descricao": "VOLVO FH 540",
    "horas": 736.5,
    "paradas": 24,
-   "disp": 0.3737,
-   "motivo": "Motor / arrefecimento"
-  },
-  {
-   "frota": "61251",
-   "descricao": "VOLVO VM 330",
-   "horas": 726.3,
-   "paradas": 9,
-   "disp": 0.3824,
-   "motivo": "Freios / ar comprimido"
-  },
-  {
-   "frota": "61250",
-   "descricao": "VOLVO VM 330",
-   "horas": 710.0,
-   "paradas": 35,
-   "disp": 0.3963,
-   "motivo": "Elétrica"
-  },
-  {
-   "frota": "61002",
-   "descricao": "MUNCK VW 11180",
-   "horas": 675.3,
-   "paradas": 5,
-   "disp": 0.4258,
-   "motivo": "Suspensão / direção"
-  },
-  {
-   "frota": "61151",
-   "descricao": "VOLVO VM 270",
-   "horas": 662.4,
-   "paradas": 13,
-   "disp": 0.4368,
-   "motivo": "Câmbio / transmissão"
-  },
-  {
-   "frota": "60501",
-   "descricao": "VOLVO FMX 540",
-   "horas": 620.1,
-   "paradas": 14,
-   "disp": 0.4727,
-   "motivo": "Pneus / rodas"
-  },
-  {
-   "frota": "60536",
-   "descricao": "VOLVO FH 540",
-   "horas": 605.3,
-   "paradas": 33,
-   "disp": 0.4853,
+   "disp": 0.6258,
    "motivo": "Motor / arrefecimento"
   },
   {
    "frota": "60515",
    "descricao": "VOLVO FMX 540",
-   "horas": 582.4,
-   "paradas": 41,
-   "disp": 0.5048,
+   "horas": 720.3,
+   "paradas": 64,
+   "disp": 0.634,
    "motivo": "Quinta roda / engate"
-  },
-  {
-   "frota": "60505",
-   "descricao": "VOLVO FMX 540",
-   "horas": 571.6,
-   "paradas": 24,
-   "disp": 0.5139,
-   "motivo": "Freios / ar comprimido"
   },
   {
    "frota": "60535",
    "descricao": "VOLVO FM 540",
-   "horas": 565.0,
-   "paradas": 38,
-   "disp": 0.5195,
+   "horas": 694.2,
+   "paradas": 56,
+   "disp": 0.6472,
    "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60501",
+   "descricao": "VOLVO FMX 540",
+   "horas": 691.1,
+   "paradas": 22,
+   "disp": 0.6488,
+   "motivo": "Pneus / rodas"
   },
   {
    "frota": "60917",
    "descricao": "VOLVO VM 270",
-   "horas": 555.7,
-   "paradas": 21,
-   "disp": 0.5275,
-   "motivo": "Motor / arrefecimento"
-  },
-  {
-   "frota": "60533",
-   "descricao": "VOLVO FM 540",
-   "horas": 520.0,
-   "paradas": 33,
-   "disp": 0.5578,
-   "motivo": "Motor / arrefecimento"
-  },
-  {
-   "frota": "61152",
-   "descricao": "VOLVO VM 270",
-   "horas": 491.6,
-   "paradas": 13,
-   "disp": 0.5819,
-   "motivo": "Motor / arrefecimento"
-  },
-  {
-   "frota": "60530",
-   "descricao": "VOLVO FM 540",
-   "horas": 488.0,
-   "paradas": 13,
-   "disp": 0.5851,
-   "motivo": "Reforma"
-  },
-  {
-   "frota": "60916",
-   "descricao": "VOLVO VM 290",
-   "horas": 475.0,
-   "paradas": 21,
-   "disp": 0.5961,
+   "horas": 689.7,
+   "paradas": 40,
+   "disp": 0.6495,
    "motivo": "Motor / arrefecimento"
   },
   {
    "frota": "60503",
    "descricao": "VOLVO FMX 540",
-   "horas": 466.8,
-   "paradas": 13,
-   "disp": 0.6031,
-   "motivo": "Preventiva"
-  },
-  {
-   "frota": "60514",
-   "descricao": "VOLVO FMX 540",
-   "horas": 464.9,
-   "paradas": 17,
-   "disp": 0.6046,
-   "motivo": "Preventiva"
-  },
-  {
-   "frota": "60517",
-   "descricao": "VOLVO FMX 540",
-   "horas": 462.9,
-   "paradas": 38,
-   "disp": 0.6063,
-   "motivo": "Sinistro / acidente"
-  },
-  {
-   "frota": "60534",
-   "descricao": "VOLVO FM 540",
-   "horas": 449.4,
-   "paradas": 31,
-   "disp": 0.6179,
-   "motivo": "Estrutura / solda"
+   "horas": 685.5,
+   "paradas": 26,
+   "disp": 0.6517,
+   "motivo": "Motor / arrefecimento"
   }
  ]
 }</script>
@@ -1397,7 +1655,7 @@
   T.disp_frase = D.meta
     ? (D.disp_media>=D.meta ? "Acima da meta de " + pct(D.meta,0) + "." : "Abaixo da meta de " + pct(D.meta,0) + " — faltaram " + nf((D.meta-D.disp_media)*100,1) + " p.p.")
     : "do tempo a frota esteve pronta para operar.";
-  T.disp_sub = nf(D.frota_total) + " caminhões · " + nf(D.dias) + " dias · " + dataLonga(D.inicio) + " a " + dataLonga(D.fim);
+  T.disp_sub = nf(D.frota_total) + " caminhões · " + nf(D.dias) + " dias" + ((D.lacunas||[]).length ? " com dados" : "") + " · " + dataLonga(D.inicio) + " a " + dataLonga(D.fim);
 
   T.kpi_titulo = "Em " + nf(D.dias) + " dias, a frota acumulou " + dur(totH) + " parada.";
   T.kpi_horas = durBig(totH);
@@ -1563,7 +1821,8 @@
     var W=host.clientWidth, H=host.clientHeight; if(!W||!H||!pts.length) return;
     var m={l:54,r:78,t:20,b:36};
     var vals=pts.map(function(p){return p.v;});
-    var lo=Math.min.apply(null, vals.concat(meta?[meta]:[])), hi=Math.max.apply(null, vals.concat(meta?[meta]:[]));
+    var okv=vals.filter(function(v){return v!=null;}); if(!okv.length) return;
+    var lo=Math.min.apply(null, okv.concat(meta?[meta]:[])), hi=Math.max.apply(null, okv.concat(meta?[meta]:[]));
     lo=Math.max(0, Math.floor((lo-0.02)*20)/20); hi=Math.min(1, Math.ceil((hi+0.01)*20)/20);
     if(hi-lo<0.1) lo=Math.max(0,hi-0.1);
     var step=(hi-lo)>0.3?0.1:0.05;
@@ -1580,18 +1839,34 @@
       var ii=nT===1?0:Math.round(k*(pts.length-1)/(nT-1));
       S("text",{x:x(ii),y:H-10,"text-anchor":"middle","class":"ax"},s).textContent=pts[ii].label;
     }
-    var last=pts.length-1, iMin=vals.indexOf(Math.min.apply(null,vals));
+    var last=pts.length-1; while(last>0 && pts[last].v==null) last--;
+    var iMin=vals.indexOf(Math.min.apply(null,okv));
     var perto = meta && Math.abs(y(pts[last].v)-y(meta))<20;
     var acima = pts[last].v>=meta;
     if(meta){
       S("line",{x1:m.l,x2:W-m.r,y1:y(meta),y2:y(meta),"class":"goal"},s);
       S("text",{x:W-m.r+10,y:y(meta)+(perto ? (acima?18:-8) : 4),"class":"goal-t"},s).textContent="Meta "+pct(meta,0);
     }
-    var d="", a="";
-    pts.forEach(function(p,i){ d+=(i?"L":"M")+x(i).toFixed(1)+","+y(p.v).toFixed(1); });
-    a = d + "L"+x(pts.length-1).toFixed(1)+","+(m.t+ph)+"L"+x(0).toFixed(1)+","+(m.t+ph)+"Z";
-    S("path",{d:a,fill:"var(--orange)","fill-opacity":".10",stroke:"none"},s);
-    S("path",{d:d,fill:"none",stroke:"var(--orange)","stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"},s);
+    // trechos contínuos (semanas sem dados quebram a linha)
+    var trechos=[], cur=[];
+    pts.forEach(function(p,i){ if(p.v==null){ if(cur.length) trechos.push(cur); cur=[]; } else cur.push(i); });
+    if(cur.length) trechos.push(cur);
+    trechos.forEach(function(tr){
+      var d=tr.map(function(i,k){return (k?"L":"M")+x(i).toFixed(1)+","+y(pts[i].v).toFixed(1);}).join("");
+      var a=d+"L"+x(tr[tr.length-1]).toFixed(1)+","+(m.t+ph)+"L"+x(tr[0]).toFixed(1)+","+(m.t+ph)+"Z";
+      S("path",{d:a,fill:"var(--orange)","fill-opacity":".10",stroke:"none"},s);
+      if(tr.length===1) S("circle",{cx:x(tr[0]),cy:y(pts[tr[0]].v),r:3,fill:"var(--orange)"},s);
+      else S("path",{d:d,fill:"none",stroke:"var(--orange)","stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"},s);
+    });
+    // faixas sem dados
+    for(var g0=0; g0<pts.length; g0++){
+      if(pts[g0].v!=null) continue;
+      var g1=g0; while(g1+1<pts.length && pts[g1+1].v==null) g1++;
+      var xa=x(Math.max(0,g0-0.5)), xb=x(Math.min(pts.length-1,g1+0.5));
+      S("rect",{x:xa,y:m.t,width:Math.max(1,xb-xa),height:ph,fill:"var(--grid)","fill-opacity":".5"},s);
+      S("text",{x:(xa+xb)/2,y:m.t+ph/2,"text-anchor":"middle","class":"ax"},s).textContent="sem dados";
+      g0=g1;
+    }
 
     // rótulos seletivos: último ponto e mínimo
     [[last,"end"],[iMin,"min"]].forEach(function(q, n){
@@ -1614,6 +1889,7 @@
       var r=host.getBoundingClientRect(), mx=e.clientX-r.left;
       var i=Math.max(0,Math.min(pts.length-1,Math.round((mx-m.l)/pw*(pts.length-1))));
       var p=pts[i];
+      if(p.v==null){ xh.style.opacity=0; hd.setAttribute("opacity",0); t.style.opacity=0; return; }
       xh.setAttribute("x1",x(i)); xh.setAttribute("x2",x(i)); xh.style.opacity=.6;
       hd.setAttribute("cx",x(i)); hd.setAttribute("cy",y(p.v)); hd.setAttribute("opacity",1);
       t.innerHTML=p.tip; t.style.opacity=1; placeTip(t, host, x(i), y(p.v));
@@ -1648,7 +1924,7 @@
   /* ---------- montar gráficos ---------- */
   var ptsSem = semanas.map(function(w){
     return { v:w.disp, label:dm(w.inicio),
-      tip: tipHtml("Semana de "+dm(w.inicio), [["Disponibilidade",pct(w.disp)],["Horas paradas",nf(w.horas,0)+" h"],["Dias na semana",w.dias]]) };
+      tip: w.disp==null ? "" : tipHtml("Semana de "+dm(w.inicio), [["Disponibilidade",pct(w.disp)],["Horas paradas",nf(w.horas,0)+" h"],["Dias com dados",w.dias]]) };
   });
   function drawLine(){ lineChart(document.getElementById("chEvol"), ptsSem, D.meta); }
 
