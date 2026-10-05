@@ -266,8 +266,15 @@
 -->
 <script id="dados" type="application/json">{
  "escopo": "caminhões próprios",
- "aviso": "Exportações do CHB sem OS de reforma: reformas encerradas antes de 15/08 podem não constar.",
+ "aviso": "OS de reforma desconsideradas (5 OS): nesses dias o caminhão sai da base.",
  "lacunas": [],
+ "excluidas": {
+  "tipos": [
+   "reforma"
+  ],
+  "os": 5,
+  "horas": 13483.2
+ },
  "foco": {
   "nome": "Quinta roda",
   "os": 449,
@@ -276,7 +283,7 @@
   "base": 61,
   "horas": 4423.9,
   "mediana_h": 4.48,
-  "pct_paradas": 0.059,
+  "pct_paradas": 0.0591,
   "reincidentes_3": 51,
   "semanas": [
    {
@@ -638,8 +645,8 @@
   },
   {
    "nome": "Externa",
-   "horas": 39572.4,
-   "paradas": 79
+   "horas": 26089.1,
+   "paradas": 74
   },
   {
    "nome": "No campo",
@@ -657,27 +664,13 @@
    "nome": "Preventiva",
    "horas": 21621.0,
    "paradas": 1394
-  },
-  {
-   "nome": "Reforma",
-   "horas": 13483.2,
-   "paradas": 5
   }
  ],
  "abertas": {
-  "caminhoes": 31,
-  "os": 31,
-  "mais_30d": 8,
+  "caminhoes": 27,
+  "os": 27,
+  "mais_30d": 4,
   "lista": [
-   {
-    "frota": "60811",
-    "descricao": "VW 9180",
-    "desde": "2026-03-16",
-    "dias": 203,
-    "motivo": "Reforma",
-    "local": "Externa",
-    "problema": "REFORMA"
-   },
    {
     "frota": "60809",
     "descricao": "M.BENZ 2729",
@@ -695,33 +688,6 @@
     "motivo": "Sinistro / acidente",
     "local": "Externa",
     "problema": "SINISTRO/ OFICINA EXTERNA - LIDER TACOGRAFO"
-   },
-   {
-    "frota": "60903",
-    "descricao": "VOLVO FH 520",
-    "desde": "2026-06-22",
-    "dias": 105,
-    "motivo": "Reforma",
-    "local": "Externa",
-    "problema": "REFORMA / RECOMPLETAR LIQUIDO DO ARREFECIMENTO / L. O CINTO DO MOTORIS"
-   },
-   {
-    "frota": "60914",
-    "descricao": "VOLVO VM 270",
-    "desde": "2026-07-21",
-    "dias": 76,
-    "motivo": "Reforma",
-    "local": "Externa",
-    "problema": "REFORMA"
-   },
-   {
-    "frota": "60805",
-    "descricao": "VW 8120",
-    "desde": "2026-08-04",
-    "dias": 62,
-    "motivo": "Reforma",
-    "local": "Externa",
-    "problema": "REFORMA."
    },
    {
     "frota": "60518",
@@ -758,6 +724,42 @@
     "motivo": "Freios / ar comprimido",
     "local": "Externa",
     "problema": "FREIO / SUSPENSAO"
+   },
+   {
+    "frota": "60501",
+    "descricao": "VOLVO FMX 540",
+    "desde": "2026-09-22",
+    "dias": 13,
+    "motivo": "Pneus / rodas",
+    "local": "Interna",
+    "problema": "TROCAR CUBO DE ROLAMENTO / TROCAR CUICA L/D. / PIT STOP"
+   },
+   {
+    "frota": "60552",
+    "descricao": "VOLVO FM 540",
+    "desde": "2026-09-24",
+    "dias": 11,
+    "motivo": "Motor / arrefecimento",
+    "local": "Externa",
+    "problema": "MOTOR"
+   },
+   {
+    "frota": "60813",
+    "descricao": "VW 9180",
+    "desde": "2026-09-25",
+    "dias": 10,
+    "motivo": "Motor / arrefecimento",
+    "local": "Externa",
+    "problema": "TURBINA"
+   },
+   {
+    "frota": "60526",
+    "descricao": "VOLVO FH 540",
+    "desde": "2026-09-25",
+    "dias": 9,
+    "motivo": "Preventiva",
+    "local": "Interna",
+    "problema": "PREVENTIVA; PIT STOP; CAIXA DE MARCHA;ALARME DE GPS INVALIDO"
    }
   ]
  },
@@ -766,169 +768,169 @@
  "fim": "2026-10-04",
  "dias": 181,
  "frota_total": 106,
- "frotas_com_parada": 103,
+ "frotas_com_parada": 102,
  "meta": null,
- "disp_media": 0.7135,
- "horas_paradas": 131941.0,
- "paradas": 7268,
- "mediana_h": 3.81,
+ "disp_media": 0.735,
+ "horas_paradas": 118457.8,
+ "paradas": 7263,
+ "mediana_h": 3.8,
  "corte_longa": "3 dias",
  "semanas": [
   {
    "inicio": "2026-04-07",
    "dias": 6,
-   "horas": 2707.0,
-   "disp": 0.8227
+   "horas": 2563.0,
+   "disp": 0.8305
   },
   {
    "inicio": "2026-04-13",
    "dias": 7,
-   "horas": 3604.2,
-   "disp": 0.7976
+   "horas": 3311.8,
+   "disp": 0.8109
   },
   {
    "inicio": "2026-04-20",
    "dias": 7,
-   "horas": 3861.9,
-   "disp": 0.7831
+   "horas": 3525.9,
+   "disp": 0.7982
   },
   {
    "inicio": "2026-04-27",
    "dias": 7,
-   "horas": 4271.8,
-   "disp": 0.7601
+   "horas": 3935.8,
+   "disp": 0.7747
   },
   {
    "inicio": "2026-05-04",
    "dias": 7,
-   "horas": 4824.9,
-   "disp": 0.7291
+   "horas": 4488.9,
+   "disp": 0.7431
   },
   {
    "inicio": "2026-05-11",
    "dias": 7,
-   "horas": 5250.5,
-   "disp": 0.7052
+   "horas": 4914.5,
+   "disp": 0.7187
   },
   {
    "inicio": "2026-05-18",
    "dias": 7,
-   "horas": 5167.4,
-   "disp": 0.7098
+   "horas": 4831.4,
+   "disp": 0.7235
   },
   {
    "inicio": "2026-05-25",
    "dias": 7,
-   "horas": 4934.9,
-   "disp": 0.7229
+   "horas": 4598.9,
+   "disp": 0.7368
   },
   {
    "inicio": "2026-06-01",
    "dias": 7,
-   "horas": 5328.8,
-   "disp": 0.7008
+   "horas": 4992.8,
+   "disp": 0.7142
   },
   {
    "inicio": "2026-06-08",
    "dias": 7,
-   "horas": 5615.0,
-   "disp": 0.6847
+   "horas": 5279.0,
+   "disp": 0.6979
   },
   {
    "inicio": "2026-06-15",
    "dias": 7,
-   "horas": 5233.9,
-   "disp": 0.7061
+   "horas": 4897.9,
+   "disp": 0.7197
   },
   {
    "inicio": "2026-06-22",
    "dias": 7,
-   "horas": 6472.8,
-   "disp": 0.6365
+   "horas": 5977.2,
+   "disp": 0.6547
   },
   {
    "inicio": "2026-06-29",
    "dias": 7,
-   "horas": 5960.5,
-   "disp": 0.6653
+   "horas": 5456.5,
+   "disp": 0.6847
   },
   {
    "inicio": "2026-07-06",
    "dias": 7,
-   "horas": 5007.0,
-   "disp": 0.7188
+   "horas": 4502.9,
+   "disp": 0.7398
   },
   {
    "inicio": "2026-07-13",
    "dias": 7,
-   "horas": 4113.7,
-   "disp": 0.769
+   "horas": 3609.7,
+   "disp": 0.7914
   },
   {
    "inicio": "2026-07-20",
    "dias": 7,
-   "horas": 4054.3,
-   "disp": 0.7723
+   "horas": 3412.5,
+   "disp": 0.8012
   },
   {
    "inicio": "2026-07-27",
    "dias": 7,
-   "horas": 5646.9,
-   "disp": 0.6829
+   "horas": 4974.9,
+   "disp": 0.7097
   },
   {
    "inicio": "2026-08-03",
    "dias": 7,
-   "horas": 5450.8,
-   "disp": 0.6939
+   "horas": 4648.6,
+   "disp": 0.7266
   },
   {
    "inicio": "2026-08-10",
    "dias": 7,
-   "horas": 5262.9,
-   "disp": 0.7045
+   "horas": 4422.9,
+   "disp": 0.7393
   },
   {
    "inicio": "2026-08-17",
    "dias": 7,
-   "horas": 4747.2,
-   "disp": 0.7334
+   "horas": 3907.2,
+   "disp": 0.7697
   },
   {
    "inicio": "2026-08-24",
    "dias": 7,
-   "horas": 5411.2,
-   "disp": 0.6961
+   "horas": 4571.2,
+   "disp": 0.7306
   },
   {
    "inicio": "2026-08-31",
    "dias": 7,
-   "horas": 5566.2,
-   "disp": 0.6874
+   "horas": 4874.9,
+   "disp": 0.7152
   },
   {
    "inicio": "2026-09-07",
    "dias": 7,
-   "horas": 5456.7,
-   "disp": 0.6936
+   "horas": 4784.7,
+   "disp": 0.7208
   },
   {
    "inicio": "2026-09-14",
    "dias": 7,
-   "horas": 5536.1,
-   "disp": 0.6891
+   "horas": 4864.1,
+   "disp": 0.7161
   },
   {
    "inicio": "2026-09-21",
    "dias": 7,
-   "horas": 6443.8,
-   "disp": 0.6382
+   "horas": 5771.8,
+   "disp": 0.6632
   },
   {
    "inicio": "2026-09-28",
    "dias": 7,
-   "horas": 6010.6,
-   "disp": 0.6625
+   "horas": 5338.6,
+   "disp": 0.6885
   }
  ],
  "meses": [
@@ -936,64 +938,64 @@
    "mes": "2026-04",
    "dias": 24,
    "parcial": true,
-   "horas": 12643.7,
-   "paradas": 923,
-   "horas_eventos": 20749.0,
-   "disp": 0.7929
+   "horas": 11679.3,
+   "paradas": 922,
+   "horas_eventos": 17413.3,
+   "disp": 0.8056
   },
   {
    "mes": "2026-05",
    "dias": 31,
    "parcial": false,
-   "horas": 21978.9,
+   "horas": 20490.9,
    "paradas": 1279,
    "horas_eventos": 21061.2,
-   "disp": 0.7213
+   "disp": 0.7352
   },
   {
    "mes": "2026-06",
    "dias": 30,
    "parcial": false,
-   "horas": 24330.5,
-   "paradas": 1225,
-   "horas_eventos": 26054.9,
-   "disp": 0.6812
+   "horas": 22682.9,
+   "paradas": 1224,
+   "horas_eventos": 23543.3,
+   "disp": 0.6962
   },
   {
    "mes": "2026-07",
    "dias": 31,
    "parcial": false,
-   "horas": 21489.5,
-   "paradas": 1204,
-   "horas_eventos": 19846.8,
-   "disp": 0.7275
+   "horas": 18999.6,
+   "paradas": 1203,
+   "horas_eventos": 18029.0,
+   "disp": 0.7512
   },
   {
    "mes": "2026-08",
    "dias": 31,
    "parcial": false,
-   "horas": 23393.6,
-   "paradas": 1281,
-   "horas_eventos": 20838.7,
-   "disp": 0.7034
+   "horas": 19764.2,
+   "paradas": 1280,
+   "horas_eventos": 19364.6,
+   "disp": 0.7373
   },
   {
    "mes": "2026-09",
    "dias": 30,
    "parcial": false,
-   "horas": 24839.4,
+   "horas": 21959.4,
    "paradas": 1230,
    "horas_eventos": 18081.7,
-   "disp": 0.6745
+   "disp": 0.701
   },
   {
    "mes": "2026-10",
    "dias": 4,
    "parcial": true,
-   "horas": 3265.5,
+   "horas": 2881.5,
    "paradas": 125,
    "horas_eventos": 964.8,
-   "disp": 0.6791
+   "disp": 0.7057
   }
  ],
  "motivos": [
@@ -1011,11 +1013,6 @@
    "nome": "Elétrica",
    "horas": 15035.5,
    "paradas": 1378
-  },
-  {
-   "nome": "Reforma",
-   "horas": 13483.2,
-   "paradas": 5
   },
   {
    "nome": "Câmbio / transmissão",
@@ -1106,20 +1103,12 @@
   },
   {
    "faixa": "+7 dias",
-   "paradas": 101,
-   "horas": 55723.2,
+   "paradas": 96,
+   "horas": 42239.9,
    "longa": true
   }
  ],
  "frotas": [
-  {
-   "frota": "60811",
-   "descricao": "VW 9180",
-   "horas": 4344.0,
-   "paradas": 1,
-   "disp": 0.0,
-   "motivo": "Reforma"
-  },
   {
    "frota": "60809",
    "descricao": "M.BENZ 2729",
@@ -1127,22 +1116,6 @@
    "paradas": 2,
    "disp": 0.0398,
    "motivo": "Motor / arrefecimento"
-  },
-  {
-   "frota": "60530",
-   "descricao": "VOLVO FM 540",
-   "horas": 3526.3,
-   "paradas": 15,
-   "disp": 0.1882,
-   "motivo": "Reforma"
-  },
-  {
-   "frota": "60903",
-   "descricao": "VOLVO FH 520",
-   "horas": 3247.9,
-   "paradas": 28,
-   "disp": 0.2523,
-   "motivo": "Reforma"
   },
   {
    "frota": "61250",
@@ -1217,14 +1190,6 @@
    "motivo": "Motor / arrefecimento"
   },
   {
-   "frota": "60914",
-   "descricao": "VOLVO VM 270",
-   "horas": 2096.9,
-   "paradas": 22,
-   "disp": 0.5173,
-   "motivo": "Reforma"
-  },
-  {
    "frota": "60911",
    "descricao": "VOLKSWAGEN 26260",
    "horas": 2088.9,
@@ -1247,14 +1212,6 @@
    "paradas": 49,
    "disp": 0.5278,
    "motivo": "Motor / arrefecimento"
-  },
-  {
-   "frota": "60805",
-   "descricao": "VW 8120",
-   "horas": 2012.7,
-   "paradas": 18,
-   "disp": 0.5367,
-   "motivo": "Reforma"
   },
   {
    "frota": "60505",
@@ -1351,6 +1308,46 @@
    "paradas": 98,
    "disp": 0.6505,
    "motivo": "Preventiva"
+  },
+  {
+   "frota": "61151",
+   "descricao": "VOLVO VM 270",
+   "horas": 1472.5,
+   "paradas": 40,
+   "disp": 0.661,
+   "motivo": "Câmbio / transmissão"
+  },
+  {
+   "frota": "60901",
+   "descricao": "VOLVO FH 520",
+   "horas": 1459.3,
+   "paradas": 67,
+   "disp": 0.6641,
+   "motivo": "Preventiva"
+  },
+  {
+   "frota": "60545",
+   "descricao": "VOLVO FM 540",
+   "horas": 1422.1,
+   "paradas": 103,
+   "disp": 0.6726,
+   "motivo": "Preventiva"
+  },
+  {
+   "frota": "61152",
+   "descricao": "VOLVO VM 270",
+   "horas": 1394.4,
+   "paradas": 72,
+   "disp": 0.679,
+   "motivo": "Motor / arrefecimento"
+  },
+  {
+   "frota": "60917",
+   "descricao": "VOLVO VM 270",
+   "horas": 1374.1,
+   "paradas": 74,
+   "disp": 0.6837,
+   "motivo": "Elétrica"
   }
  ]
 }</script>
